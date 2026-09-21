@@ -65,3 +65,11 @@ export function CheckIcon(props: IconProps) {
     </svg>
   );
 }
+
+export function FlameIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M12 3.5c.6 2.3-.6 3.9-1.7 5.2C9 10.3 8 11.5 8 13.3a4 4 0 0 0 8 0c0-1.4-.6-2.6-1.2-3.5-.2.9-.8 1.6-1.5 1.9.5-2.6-.2-6-1.3-8.2Z" />
+    </svg>
+  );
+}

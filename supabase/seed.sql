@@ -45,6 +45,78 @@ values
   )
 on conflict (slug) do nothing;
 
+-- ---------- Séries futuras ("Em breve") ----------
+-- Candidatos reais do catálogo futuro, SEM episódios: enchem as fileiras
+-- da home e recebem capa tipográfica autoral. Ao produzir a série,
+-- insira os episódios e o card vira link automaticamente.
+insert into public.series (slug, title, description, category, thumbnail, display_order)
+values
+  (
+    'edir-macedo',
+    'Edir Macedo',
+    'Do funcionário público ao fundador da Universal: a construção de um império evangélico e a entrada da igreja na política brasileira.',
+    'religioso',
+    null,
+    5
+  ),
+  (
+    'lula',
+    'Lula',
+    'Do torno mecânico ao Planalto: a trajetória do metalúrgico que mudou a política brasileira — idas, vindas e o retorno.',
+    'politico',
+    null,
+    6
+  ),
+  (
+    'irma-dulce',
+    'Irmã Dulce',
+    'O anjo bom da Bahia: a vida da primeira santa brasileira dedicada aos mais pobres de Salvador.',
+    'religioso',
+    null,
+    7
+  ),
+  (
+    'jair-bolsonaro',
+    'Jair Bolsonaro',
+    'Do quartel ao Planalto: o capitão que polarizou o Brasil e redefiniu a direita no país.',
+    'politico',
+    null,
+    8
+  ),
+  (
+    'silas-malafaia',
+    'Silas Malafaia',
+    'O pastor que virou comentarista político: púlpito, televisão e a nova direita evangélica.',
+    'religioso',
+    null,
+    9
+  ),
+  (
+    'tancredo-neves',
+    'Tancredo Neves',
+    'O presidente que não tomou posse: a luta pelas Diretas e a redemocratização do Brasil.',
+    'politico',
+    null,
+    10
+  ),
+  (
+    'divaldo-franco',
+    'Divaldo Franco',
+    'O médium educador: a Mansão do Caminho e uma vida dedicada à psicografia e à infância abandonada.',
+    'religioso',
+    null,
+    11
+  ),
+  (
+    'dom-helder-camara',
+    'Dom Hélder Câmara',
+    'O bispo dos pobres: coragem profética contra a ditadura e a voz da não-violência no Recife.',
+    'politico',
+    null,
+    12
+  )
+on conflict (slug) do nothing;
+
 -- ---------- Pastor Everaldo Dias ----------
 insert into public.episodes (series_id, number, title, youtube_id, duration_seconds)
 select s.id, e.number, e.title, e.youtube_id, e.duration_seconds

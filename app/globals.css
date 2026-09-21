@@ -81,6 +81,14 @@ a {
       transparent 100%
     );
   }
+  .scrim-left {
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.88) 0%,
+      rgba(0, 0, 0, 0.45) 42%,
+      transparent 68%
+    );
+  }
   .scrim-vignette {
     background: radial-gradient(
       120% 90% at 50% 40%,

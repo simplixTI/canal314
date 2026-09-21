@@ -13,13 +13,13 @@ Direção: PINADA pelo dono — "ReelShort imersivo" + "preto e branco puro" (ca
 
 ## Direction contract
 
-THESIS: O catálogo É o feed. A home não é uma vitrine com grade — é uma sequência vertical de pôsteres em tela cheia que se desliza com o polegar, como abrir o ReelShort. Recusa o arranjo padrão "hero + grid de cards pequenos".
+THESIS: O catálogo é uma home de streaming clássica (referência explícita do dono: reelshort.com/pt) — hero cinematográfico do carro-chefe seguido de fileiras horizontais de mini-thumbs (Novo Lançamento, Mais Assistidos, por categoria). Recusa o feed vertical snap-scroll (rejeitado pelo dono em 2026-09) e o arranjo "hero + grid de cards pequenos".
 
 OWN-WORLD: monocromático absoluto. Chão quase-preto (#0a0a0a), tinta branca, cinzas neutros para hierarquia, hairlines 1px em branco a 8-12%. Nenhuma cor em nenhum estado (hover, badge, erro usa inversão P&B ou peso). Tipografia condensada pesada para títulos de série (display), micro-labels uppercase tracking largo, corpo em grotesk neutro. Grão de filme sutil e scrims de gradiente preto sobre a arte.
 
 STORY: o visitante entende em 3 segundos: "são micro-documentários verticais sobre figuras reais da fé e da política; posso assistir agora de graça". Acredita pela escala cinematográfica da arte e pelos números concretos (N episódios, 1-2 min, 3 dias grátis). Age: CTA primário sempre visível.
 
-FIRST VIEWPORT (mobile 390px, o viewport principal): pôster da série carro-chefe sangrando de borda a borda ocupando ~92dvh; logo pequena no topo; scrim de gradiente do preto ao transparente no terço inferior; sobre o scrim: micro-label categoria, título da série em display pesado, linha meta (N episódios · 1-2 min), CTA branco sólido "Assistir agora" + link "Começar teste grátis". Indicador de scroll (chevron/linha) convidando a deslizar para a próxima série. Desktop: mesma composição centralizada em coluna de ~430px com laterais em preto absoluto (o app é mobile por natureza).
+FIRST VIEWPORT (mobile 390px, o viewport principal): hero do carro-chefe (display_order=1, Pastor Everaldo Dias) ocupando ~88dvh com a arte fotográfica em P&B sangrando de borda a borda; scrims de gradiente da esquerda e de baixo; coluna de conteúdo à esquerda (max-w ~560px): fileira de badges (chip invertido "Novo" + chip hairline de categoria), título display gigante, descrição em 2 linhas (clamp), linha meta (N episódios · 1-2 min), pill branco grande "▶ Reproduzir" + link hairline "Teste grátis". Abaixo: fileiras horizontais roláveis (no-scrollbar) de mini-thumbs 16:10 — "Novo Lançamento", "Mais Assistidos" (ícone de chama SVG monocromático), "Religioso", "Político"; séries futuras (0 episódios) levam chip invertido "Em breve" e não são links. Desktop: layout full-width como o reelshort.com (o app foi ampliado para largura total pelo dono; hero com arte cinematográfica em toda a largura e conteúdo à esquerda).
 
 FORM: canon da categoria (vertical streaming feed), pinado pelo brief. Seed 8edad5e5 reconhecido; a pinagem do usuário prevalece sobre o roll.
 
