@@ -3,18 +3,145 @@
 @tailwind utilities;
 
 :root {
-  --background: #0a0a0a;
-  --foreground: #f5f5f5;
+  --ground: #0a0a0a;
+  --black: #000000;
+  --ink: #ffffff;
+}
+
+html {
+  background: var(--black);
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--black);
+  color: var(--ink);
+  font-family: var(--font-body), Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
+/* ---------- Browser surfaces, themed to the world ---------- */
+
+::selection {
+  background: var(--ink);
+  color: var(--black);
+}
+
+input,
+textarea {
+  caret-color: var(--ink);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+}
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+a {
+  text-underline-offset: 4px;
+}
+
+/* ---------- Utilities of the world ---------- */
+
 @layer utilities {
+  /* Micro-label: uppercase, wide tracking, small — the voice of metadata */
+  .micro-label {
+    @apply text-[11px] font-semibold uppercase tracking-[0.22em];
+  }
+
+  /* Scrim preto sobre arte (cobre o terço inferior, desce suave) */
+  .scrim-bottom {
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.95) 0%,
+      rgba(0, 0, 0, 0.78) 28%,
+      rgba(0, 0, 0, 0.38) 52%,
+      transparent 74%
+    );
+  }
+  .scrim-top {
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.7) 0%,
+      transparent 100%
+    );
+  }
+  .scrim-vignette {
+    background: radial-gradient(
+      120% 90% at 50% 40%,
+      transparent 55%,
+      rgba(0, 0, 0, 0.55) 100%
+    );
+  }
+
+  /* Grão de filme */
+  .film-grain {
+    background-image: url("/noise.png");
+    background-size: 180px 180px;
+  }
+
+  /* Snap feed sem scrollbar visível */
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+/* ---------- Motion: um momento autoral — a deixa de scroll ---------- */
+
+@keyframes cue-drop {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateY(7px);
+    opacity: 0.45;
+  }
+}
+.scroll-cue {
+  animation: cue-drop 2.1s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.rise-in {
+  animation: rise-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-cue,
+  .rise-in {
+    animation: none;
   }
 }

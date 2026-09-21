@@ -12,6 +12,7 @@ import {
 import { canWatchEpisode } from "@/lib/access";
 import Paywall from "@/components/Paywall";
 import SetupNotice from "@/components/SetupNotice";
+import { ChevronLeftIcon } from "@/components/icons";
 
 export const dynamic = "force-dynamic";
 
@@ -24,7 +25,7 @@ export default async function WatchPage({
   const supabase = await createClient();
   if (!supabase) {
     return (
-      <div className="mx-auto max-w-3xl px-4 py-10">
+      <div className="flex min-h-dvh items-center justify-center px-6">
         <SetupNotice />
       </div>
     );
@@ -52,7 +53,7 @@ export default async function WatchPage({
 
   const access = canWatchEpisode(user.id, profile, subscription, episode);
   if (!access.allowed) {
-    return <Paywall reason={access.reason} />;
+    return <Paywall reason={access.reason} seriesTitle={series.title} seriesSlug={series.slug} />;
   }
 
   // Registra o progresso ("continuar assistindo") — falha silenciosa é ok
@@ -67,64 +68,78 @@ export default async function WatchPage({
   const next = episodes.find((e) => e.number === episodeNumber + 1);
 
   return (
-    <div className="mx-auto max-w-md px-4 py-6">
-      <div className="mb-4 flex items-center justify-between text-sm">
-        <Link
-          href={`/serie/${series.slug}`}
-          className="text-neutral-400 transition hover:text-white"
+    <div className="relative h-dvh overflow-hidden bg-black">
+      {/* Player vertical 9:16 cobrindo a tela inteira */}
+      <div className="absolute inset-0 [container-type:size]">
+        <div
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+          style={{ width: "max(100cqw, 56.25cqh)", height: "max(100cqh, 177.78cqw)" }}
         >
-          ← {series.title}
-        </Link>
-        <span className="text-neutral-500">
-          Ep. {episode.number}/{episodes.length}
-        </span>
+          <iframe
+            key={episode.id}
+            src={`https://www.youtube-nocookie.com/embed/${episode.youtube_id}?autoplay=1&rel=0&playsinline=1`}
+            title={episode.title}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+            className="h-full w-full"
+          />
+        </div>
       </div>
 
-      {/* Player vertical 9:16 */}
-      <div className="relative mx-auto aspect-[9/16] w-full max-w-sm overflow-hidden rounded-2xl border border-neutral-800 bg-black">
-        <iframe
-          key={episode.id}
-          src={`https://www.youtube-nocookie.com/embed/${episode.youtube_id}?autoplay=1&rel=0&playsinline=1`}
-          title={episode.title}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-          className="absolute inset-0 h-full w-full"
-        />
-      </div>
-
-      <h1 className="mt-4 text-center text-lg font-bold">
-        {episode.number}. {episode.title}
-      </h1>
-
-      {/* Navegação entre episódios */}
-      <div className="mt-4 flex gap-3">
-        {prev ? (
-          <Link
-            href={`/assistir/${series.slug}/${prev.number}`}
-            className="flex-1 rounded-full border border-neutral-700 px-4 py-2.5 text-center text-sm font-medium transition hover:border-white"
-          >
-            ← Ep. {prev.number}
-          </Link>
-        ) : (
-          <span className="flex-1 rounded-full border border-neutral-800 px-4 py-2.5 text-center text-sm text-neutral-700">
-            ← Anterior
-          </span>
-        )}
-        {next ? (
-          <Link
-            href={`/assistir/${series.slug}/${next.number}`}
-            className="flex-1 rounded-full bg-white px-4 py-2.5 text-center text-sm font-semibold text-neutral-950 transition hover:bg-neutral-200"
-          >
-            Próximo Ep. {next.number} →
-          </Link>
-        ) : (
+      {/* Chrome superior */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-10">
+        <div aria-hidden className="scrim-top absolute inset-0 h-24" />
+        <div className="relative flex items-center justify-between px-5 py-4">
           <Link
             href={`/serie/${series.slug}`}
-            className="flex-1 rounded-full bg-white px-4 py-2.5 text-center text-sm font-semibold text-neutral-950 transition hover:bg-neutral-200"
+            className="pointer-events-auto flex min-w-0 items-center gap-1.5 text-white/85 transition hover:text-white"
           >
-            Fim da série ✓
+            <ChevronLeftIcon className="h-5 w-5 shrink-0" />
+            <span className="truncate text-sm font-semibold">{series.title}</span>
           </Link>
-        )}
+          <span className="micro-label shrink-0 text-white/60">
+            Ep {String(episode.number).padStart(2, "0")}/{String(episodes.length).padStart(2, "0")}
+          </span>
+        </div>
+      </div>
+
+      {/* Chrome inferior */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10">
+        <div aria-hidden className="scrim-bottom absolute inset-0 h-32" />
+        <div className="relative px-5 pb-6">
+          <p className="text-sm font-medium text-white/85">
+            {episode.number}. {episode.title}
+          </p>
+          <div className="mt-4 flex gap-3">
+            {prev ? (
+              <Link
+                href={`/assistir/${series.slug}/${prev.number}`}
+                className="pointer-events-auto flex-1 border border-white/35 px-4 py-3 text-center text-xs font-bold uppercase tracking-[0.14em] text-white transition hover:border-white"
+              >
+                ← Ep. {prev.number}
+              </Link>
+            ) : (
+              <span className="pointer-events-auto flex-1 border border-white/10 px-4 py-3 text-center text-xs font-bold uppercase tracking-[0.14em] text-white/25">
+                ← Anterior
+              </span>
+            )}
+            {next ? (
+              <Link
+                href={`/assistir/${series.slug}/${next.number}`}
+                className="pointer-events-auto flex-1 bg-white px-4 py-3 text-center text-xs font-bold uppercase tracking-[0.14em] text-black transition hover:bg-white/85"
+              >
+                Ep. {next.number} →
+              </Link>
+            ) : (
+              <Link
+                href={`/serie/${series.slug}`}
+                className="pointer-events-auto flex-1 bg-white px-4 py-3 text-center text-xs font-bold uppercase tracking-[0.14em] text-black transition hover:bg-white/85"
+              >
+                Fim da série
+              </Link>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -78,106 +78,107 @@ export default function LoginForm() {
     }
   }
 
+  const inputClass =
+    "w-full border-b border-white/25 bg-transparent px-0 py-3 text-[15px] text-white placeholder:text-white/30 outline-none transition focus:border-white";
+
   return (
-    <div className="flex min-h-[80vh] items-center justify-center px-4 py-10">
-      <div className="w-full max-w-sm">
-        <div className="mb-8 flex justify-center">
-          <Logo className="h-14" />
+    <div className="flex min-h-dvh items-center justify-center px-6 py-16">
+      <div className="w-full max-w-xs">
+        <div className="flex justify-center">
+          <Logo className="h-10" />
         </div>
 
-        <div className="rounded-2xl border border-neutral-800 bg-neutral-900 p-6">
-          <h1 className="text-center text-xl font-bold">
-            {mode === "signin" ? "Entrar" : "Criar conta grátis"}
-          </h1>
-          <p className="mt-1 text-center text-xs text-neutral-400">
-            {mode === "signin"
-              ? "Acesse sua conta para continuar assistindo"
-              : "3 dias de teste grátis · sem cartão de crédito"}
-          </p>
+        <h1 className="mt-10 text-center font-[family-name:var(--font-display)] text-4xl font-semibold uppercase leading-[0.95] tracking-[-0.02em]">
+          {mode === "signin" ? "Entrar" : "Criar conta"}
+        </h1>
+        <p className="mt-3 text-center text-sm text-white/55">
+          {mode === "signin"
+            ? "Acesse sua conta para continuar assistindo"
+            : "3 dias de teste grátis · sem cartão de crédito"}
+        </p>
 
-          <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-            <div>
-              <label htmlFor="email" className="mb-1 block text-sm font-medium">
-                E-mail
-              </label>
-              <input
-                id="email"
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-3 py-2.5 text-sm outline-none transition focus:border-white"
-                placeholder="voce@exemplo.com"
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="mb-1 block text-sm font-medium">
-                Senha
-              </label>
-              <input
-                id="password"
-                type="password"
-                required
-                minLength={6}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-3 py-2.5 text-sm outline-none transition focus:border-white"
-                placeholder="mínimo 6 caracteres"
-              />
-            </div>
-
-            {error && (
-              <p className="rounded-lg border border-red-900 bg-red-950/50 px-3 py-2 text-sm text-red-300">
-                {error}
-              </p>
-            )}
-            {notice && (
-              <p className="rounded-lg border border-neutral-600 bg-neutral-800 px-3 py-2 text-sm text-neutral-200">
-                {notice}
-              </p>
-            )}
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full rounded-full bg-white px-4 py-3 font-semibold text-neutral-950 transition hover:bg-neutral-200 disabled:opacity-50"
-            >
-              {loading
-                ? "Aguarde..."
-                : mode === "signin"
-                  ? "Entrar"
-                  : "Começar teste grátis"}
-            </button>
-          </form>
-
-          <div className="my-5 flex items-center gap-3 text-xs text-neutral-500">
-            <div className="h-px flex-1 bg-neutral-800" />
-            ou
-            <div className="h-px flex-1 bg-neutral-800" />
+        <form onSubmit={handleSubmit} className="mt-10 space-y-6">
+          <div>
+            <label htmlFor="email" className="micro-label block text-white/50">
+              E-mail
+            </label>
+            <input
+              id="email"
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className={inputClass}
+              placeholder="voce@exemplo.com"
+            />
+          </div>
+          <div>
+            <label htmlFor="password" className="micro-label block text-white/50">
+              Senha
+            </label>
+            <input
+              id="password"
+              type="password"
+              required
+              minLength={6}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className={inputClass}
+              placeholder="mínimo 6 caracteres"
+            />
           </div>
 
-          <button
-            onClick={handleGoogle}
-            disabled={loading}
-            className="w-full rounded-full border border-neutral-700 px-4 py-3 text-sm font-medium transition hover:border-white disabled:opacity-50"
-          >
-            Continuar com Google
-          </button>
+          {error && (
+            <p className="border border-white/30 px-4 py-3 text-sm text-white">
+              {error}
+            </p>
+          )}
+          {notice && (
+            <p className="border border-white/30 px-4 py-3 text-sm text-white/80">
+              {notice}
+            </p>
+          )}
 
-          <p className="mt-6 text-center text-sm text-neutral-400">
-            {mode === "signin" ? "Ainda não tem conta?" : "Já tem conta?"}{" "}
-            <button
-              onClick={() => {
-                setMode(mode === "signin" ? "signup" : "signin");
-                setError(null);
-                setNotice(null);
-              }}
-              className="font-semibold text-white underline underline-offset-4"
-            >
-              {mode === "signin" ? "Cadastre-se grátis" : "Entrar"}
-            </button>
-          </p>
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-white px-6 py-4 text-sm font-bold uppercase tracking-[0.14em] text-black transition hover:bg-white/85 disabled:opacity-40"
+          >
+            {loading
+              ? "Aguarde..."
+              : mode === "signin"
+                ? "Entrar"
+                : "Começar teste grátis"}
+          </button>
+        </form>
+
+        <div className="my-8 flex items-center gap-4">
+          <div className="h-px flex-1 bg-white/15" />
+          <span className="micro-label text-white/40">ou</span>
+          <div className="h-px flex-1 bg-white/15" />
         </div>
+
+        <button
+          onClick={handleGoogle}
+          disabled={loading}
+          className="w-full border border-white/35 px-6 py-4 text-sm font-bold uppercase tracking-[0.14em] text-white transition hover:border-white disabled:opacity-40"
+        >
+          Continuar com Google
+        </button>
+
+        <p className="mt-10 text-center text-sm text-white/55">
+          {mode === "signin" ? "Ainda não tem conta?" : "Já tem conta?"}{" "}
+          <button
+            onClick={() => {
+              setMode(mode === "signin" ? "signup" : "signin");
+              setError(null);
+              setNotice(null);
+            }}
+            className="font-semibold text-white underline decoration-white/40 hover:decoration-white"
+          >
+            {mode === "signin" ? "Cadastre-se grátis" : "Entrar"}
+          </button>
+        </p>
       </div>
     </div>
   );

@@ -20,7 +20,7 @@ export function LogoutButton() {
     <button
       onClick={handleLogout}
       disabled={loading}
-      className="w-full rounded-full border border-neutral-700 px-4 py-2.5 text-sm font-medium transition hover:border-white disabled:opacity-50"
+      className="w-full border border-white/35 px-6 py-4 text-sm font-bold uppercase tracking-[0.14em] text-white transition hover:border-white disabled:opacity-40"
     >
       {loading ? "Saindo..." : "Sair da conta"}
     </button>
@@ -55,11 +55,15 @@ export function CancelSubscriptionButton() {
       <button
         onClick={handleCancel}
         disabled={loading}
-        className="text-sm text-neutral-400 underline underline-offset-4 transition hover:text-white disabled:opacity-50"
+        className="text-sm text-white/55 underline decoration-white/30 underline-offset-4 transition hover:text-white disabled:opacity-40"
       >
         {loading ? "Cancelando..." : "Cancelar assinatura"}
       </button>
-      {error && <p className="mt-2 text-sm text-red-300">{error}</p>}
+      {error && (
+        <p className="mt-3 border border-white/30 px-4 py-3 text-sm text-white">
+          {error}
+        </p>
+      )}
     </div>
   );
 }

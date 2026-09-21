@@ -19,6 +19,7 @@ import {
   LogoutButton,
 } from "@/components/AccountActions";
 import SetupNotice from "@/components/SetupNotice";
+import { PlayIcon } from "@/components/icons";
 
 export const dynamic = "force-dynamic";
 
@@ -26,7 +27,7 @@ export default async function AccountPage() {
   const supabase = await createClient();
   if (!supabase) {
     return (
-      <div className="mx-auto max-w-3xl px-4 py-10">
+      <div className="flex min-h-dvh items-center justify-center px-6">
         <SetupNotice />
       </div>
     );
@@ -46,51 +47,53 @@ export default async function AccountPage() {
   const daysLeft = trialDaysRemaining(profile);
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-8">
-      <h1 className="text-2xl font-bold">Minha conta</h1>
-      <p className="mt-1 text-sm text-neutral-400">{user.email}</p>
+    <div className="px-6 pb-16 pt-24">
+      <h1 className="font-[family-name:var(--font-display)] text-4xl font-semibold uppercase leading-[0.95] tracking-[-0.02em]">
+        Minha conta
+      </h1>
+      <p className="mt-3 text-sm text-white/55">{user.email}</p>
 
       {/* Status do plano */}
-      <section className="mt-6 rounded-2xl border border-neutral-800 bg-neutral-900 p-5">
-        <h2 className="text-sm font-semibold uppercase tracking-wider text-neutral-400">
-          Seu plano
-        </h2>
+      <section className="mt-10 border border-white/15 p-6">
+        <p className="micro-label text-white/50">Seu plano</p>
         {active ? (
-          <div className="mt-3">
-            <p className="font-semibold">
-              Assinatura ativa ✓{" "}
-              <span className="text-sm font-normal text-neutral-400">
-                ({subscription?.provider === "mock" ? "simulada" : subscription?.provider})
-              </span>
+          <div className="mt-4">
+            <p className="font-[family-name:var(--font-display)] text-2xl font-semibold uppercase tracking-[-0.02em]">
+              Assinatura ativa
             </p>
-            {subscription?.current_period_end && (
-              <p className="mt-1 text-sm text-neutral-400">
-                Válida até{" "}
-                {new Date(subscription.current_period_end).toLocaleDateString("pt-BR")}
-              </p>
-            )}
-            <div className="mt-4">
+            <p className="mt-2 text-sm text-white/55">
+              {subscription?.provider === "mock"
+                ? "Assinatura simulada (ambiente de testes)"
+                : `Via ${subscription?.provider}`}
+              {subscription?.current_period_end &&
+                ` · válida até ${new Date(subscription.current_period_end).toLocaleDateString("pt-BR")}`}
+            </p>
+            <div className="mt-5">
               <CancelSubscriptionButton />
             </div>
           </div>
         ) : trial ? (
-          <div className="mt-3">
-            <p className="font-semibold">Teste grátis ativo</p>
-            <p className="mt-1 text-sm text-neutral-400">
-              Restam {daysLeft} {daysLeft === 1 ? "dia" : "dias"} · episódios 1 e 2
-              de cada série liberados
+          <div className="mt-4">
+            <p className="font-[family-name:var(--font-display)] text-2xl font-semibold uppercase tracking-[-0.02em]">
+              Teste grátis ativo
+            </p>
+            <p className="mt-2 text-sm text-white/55">
+              Restam {daysLeft} {daysLeft === 1 ? "dia" : "dias"} · episódios 1 e
+              2 de cada série liberados
             </p>
             <Link
               href="/assinar"
-              className="mt-4 inline-block rounded-full bg-white px-5 py-2 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-200"
+              className="mt-5 block bg-white px-6 py-3.5 text-center text-xs font-bold uppercase tracking-[0.14em] text-black transition hover:bg-white/85"
             >
               Assinar agora
             </Link>
           </div>
         ) : (
-          <div className="mt-3">
-            <p className="font-semibold">Teste grátis expirado</p>
-            <p className="mt-1 text-sm text-neutral-400">
+          <div className="mt-4">
+            <p className="font-[family-name:var(--font-display)] text-2xl font-semibold uppercase tracking-[-0.02em]">
+              Teste expirado
+            </p>
+            <p className="mt-2 text-sm text-white/55">
               {profile
                 ? `Terminou em ${trialEndsAt(profile).toLocaleDateString("pt-BR")}.`
                 : ""}{" "}
@@ -98,7 +101,7 @@ export default async function AccountPage() {
             </p>
             <Link
               href="/assinar"
-              className="mt-4 inline-block rounded-full bg-white px-5 py-2 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-200"
+              className="mt-5 block bg-white px-6 py-3.5 text-center text-xs font-bold uppercase tracking-[0.14em] text-black transition hover:bg-white/85"
             >
               Assinar R$19,90/mês
             </Link>
@@ -107,48 +110,47 @@ export default async function AccountPage() {
       </section>
 
       {/* Continuar assistindo */}
-      <section className="mt-6 rounded-2xl border border-neutral-800 bg-neutral-900 p-5">
-        <h2 className="text-sm font-semibold uppercase tracking-wider text-neutral-400">
-          Continuar assistindo
-        </h2>
+      <section className="mt-10">
+        <p className="micro-label text-white/50">Continuar assistindo</p>
         {continueWatching.length === 0 ? (
-          <p className="mt-3 text-sm text-neutral-500">
+          <p className="mt-4 text-sm leading-relaxed text-white/55">
             Você ainda não assistiu nenhum episódio.{" "}
-            <Link href="/" className="underline underline-offset-4">
+            <Link
+              href="/"
+              className="text-white underline decoration-white/40 hover:decoration-white"
+            >
               Explorar séries
             </Link>
           </p>
         ) : (
-          <ul className="mt-3 space-y-2">
+          <ol className="mt-4 border-t border-white/10">
             {continueWatching.map((item) => (
               <li key={item.episode.id}>
                 <Link
                   href={`/assistir/${item.series.slug}/${item.episode.number}`}
-                  className="flex items-center gap-3 rounded-lg border border-neutral-800 px-3 py-2.5 transition hover:border-neutral-500"
+                  className="group flex items-center gap-4 border-b border-white/10 py-4 transition hover:bg-white/[0.04]"
                 >
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-neutral-800 text-sm font-bold">
-                    {item.episode.number}
+                  <span className="w-8 shrink-0 font-[family-name:var(--font-display)] text-2xl font-medium text-white/35 transition group-hover:text-white/70">
+                    {String(item.episode.number).padStart(2, "0")}
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate text-sm font-medium">
+                    <span className="block truncate text-sm font-semibold">
                       {item.series.title} — {item.episode.title}
                     </span>
-                    <span className="block text-xs text-neutral-500">
-                      {formatDuration(item.episode.duration_seconds)} min · visto em{" "}
-                      {new Date(item.watched_at).toLocaleDateString("pt-BR")}
+                    <span className="mt-1 block text-xs text-white/50">
+                      {formatDuration(item.episode.duration_seconds)} min · visto
+                      em {new Date(item.watched_at).toLocaleDateString("pt-BR")}
                     </span>
                   </span>
-                  <span className="text-neutral-500" aria-hidden>
-                    ▶
-                  </span>
+                  <PlayIcon className="h-4 w-4 shrink-0 text-white/40 transition group-hover:text-white" />
                 </Link>
               </li>
             ))}
-          </ul>
+          </ol>
         )}
       </section>
 
-      <div className="mt-6">
+      <div className="mt-12">
         <LogoutButton />
       </div>
     </div>

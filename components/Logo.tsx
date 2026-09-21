@@ -1,13 +1,16 @@
 import Link from "next/link";
 
-/** Logo da marca (imagem monocromática; invertida para o tema escuro). */
-export default function Logo({ className = "h-8" }: { className?: string }) {
+/**
+ * Logo da marca — arte branca sobre preto; `mix-blend-screen` faz o fundo
+ * preto da imagem sumir sobre o chão escuro do app.
+ */
+export default function Logo({ className = "h-7" }: { className?: string }) {
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
       src="/logo.png"
       alt="Canal314"
-      className={`${className} w-auto invert`}
+      className={`${className} w-auto mix-blend-screen`}
     />
   );
 }

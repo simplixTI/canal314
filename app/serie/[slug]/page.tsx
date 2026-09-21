@@ -3,27 +3,11 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { getSeriesBySlug, listEpisodes } from "@/lib/data";
 import { FREE_EPISODES_PER_SERIES, formatDuration } from "@/lib/access";
-import { CategoryBadge } from "@/components/SeriesCard";
+import PosterArt, { categoryLabel } from "@/components/PosterArt";
 import SetupNotice from "@/components/SetupNotice";
+import { ChevronLeftIcon, LockIcon, PlayIcon } from "@/components/icons";
 
 export const dynamic = "force-dynamic";
-
-function LockIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      className="h-4 w-4 text-neutral-500"
-      aria-label="Bloqueado"
-    >
-      <rect x="4" y="10" width="16" height="10" rx="2" />
-      <path d="M8 10V7a4 4 0 0 1 8 0v3" />
-    </svg>
-  );
-}
 
 export default async function SeriesPage({
   params,
@@ -34,7 +18,7 @@ export default async function SeriesPage({
   const supabase = await createClient();
   if (!supabase) {
     return (
-      <div className="mx-auto max-w-3xl px-4 py-10">
+      <div className="flex min-h-dvh items-center justify-center px-6">
         <SetupNotice />
       </div>
     );
@@ -44,79 +28,112 @@ export default async function SeriesPage({
   if (!series) notFound();
 
   const episodes = await listEpisodes(supabase, series.id);
+  const hasPhoto = Boolean(series.thumbnail);
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-8">
-      <Link
-        href="/"
-        className="text-sm text-neutral-400 transition hover:text-white"
-      >
-        ← Voltar ao catálogo
-      </Link>
-
-      <div className="mt-6 flex gap-5">
-        {series.thumbnail ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={series.thumbnail}
-            alt={series.title}
-            className="w-32 shrink-0 self-start rounded-xl border border-neutral-800 object-cover"
-          />
-        ) : null}
-        <div>
-          <div className="flex items-center gap-3">
-            <CategoryBadge category={series.category} />
-            <span className="text-xs text-neutral-500">
+    <div className="pb-32">
+      {/* Abertura cinematográfica */}
+      <div className="relative h-[58dvh] overflow-hidden">
+        <PosterArt
+          slug={series.slug}
+          title={series.title}
+          category={series.category}
+          thumbnail={series.thumbnail || undefined}
+          priority
+        />
+        {hasPhoto && (
+          <div aria-hidden className="scrim-bottom absolute inset-0" />
+        )}
+        <Link
+          href="/"
+          className="absolute left-5 top-24 flex items-center gap-1 text-white/80 transition hover:text-white"
+        >
+          <ChevronLeftIcon className="h-4 w-4" />
+          <span className="micro-label">Catálogo</span>
+        </Link>
+        {hasPhoto && (
+          <div className="absolute inset-x-0 bottom-0 px-6 pb-6">
+            <p className="micro-label text-white/70">
+              {categoryLabel(series.category)}
+            </p>
+            <h1 className="mt-3 font-[family-name:var(--font-display)] text-5xl font-semibold uppercase leading-[0.95] tracking-[-0.02em]">
+              {series.title}
+            </h1>
+            <p className="mt-3 text-sm text-white/60">
               {episodes.length}{" "}
-              {episodes.length === 1 ? "episódio" : "episódios"}
-            </span>
+              {episodes.length === 1 ? "episódio" : "episódios"} · 1–2 min cada
+            </p>
           </div>
+        )}
+      </div>
 
-          <h1 className="mt-2 text-3xl font-black tracking-tight">
-            {series.title}
-          </h1>
-          <p className="mt-3 text-neutral-300">{series.description}</p>
+      {/* Capas tipográficas carregam o título na arte; aqui vai a ficha da série */}
+      {!hasPhoto && (
+        <div className="mt-6 px-6">
+          <p className="micro-label text-white/50">
+            {categoryLabel(series.category)} · {episodes.length}{" "}
+            {episodes.length === 1 ? "episódio" : "episódios"} · 1–2 min cada
+          </p>
+          <div className="mt-4 h-px w-16 bg-white/25" aria-hidden />
         </div>
-      </div>
+      )}
 
-      <div className="mt-8 space-y-3">
-        {episodes.map((ep) => {
-          const free = ep.number <= FREE_EPISODES_PER_SERIES;
-          return (
-            <Link
-              key={ep.id}
-              href={`/assistir/${series.slug}/${ep.number}`}
-              className="flex items-center gap-4 rounded-xl border border-neutral-800 bg-neutral-900 p-4 transition hover:border-neutral-500"
-            >
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-neutral-800 text-lg font-bold text-neutral-300">
-                {ep.number}
-              </div>
-              <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2">
-                  <h2 className="truncate font-semibold">{ep.title}</h2>
-                  {free ? (
-                    <span className="shrink-0 rounded-full bg-white px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-neutral-950">
-                      Grátis
-                    </span>
-                  ) : (
-                    <LockIcon />
-                  )}
-                </div>
-                <p className="mt-0.5 text-xs text-neutral-500">
-                  Episódio {ep.number} · {formatDuration(ep.duration_seconds)} min
-                </p>
-              </div>
-              <span className="shrink-0 text-neutral-500" aria-hidden>
-                ▶
-              </span>
-            </Link>
-          );
-        })}
-      </div>
-
-      <p className="mt-6 text-center text-xs text-neutral-500">
-        Episódios 1 e 2 liberados no teste grátis · assine para liberar todos
+      <p className="mt-6 px-6 text-sm leading-relaxed text-white/70">
+        {series.description}
       </p>
+
+      {/* Episódios */}
+      <div className="mt-10">
+        <p className="micro-label px-6 text-white/50">Episódios</p>
+        <ol className="mt-4 border-t border-white/10">
+          {episodes.map((ep) => {
+            const free = ep.number <= FREE_EPISODES_PER_SERIES;
+            return (
+              <li key={ep.id}>
+                <Link
+                  href={`/assistir/${series.slug}/${ep.number}`}
+                  className="group flex items-center gap-5 border-b border-white/10 px-6 py-5 transition hover:bg-white/[0.04]"
+                >
+                  <span className="w-8 shrink-0 font-[family-name:var(--font-display)] text-2xl font-medium text-white/35 transition group-hover:text-white/70">
+                    {String(ep.number).padStart(2, "0")}
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="flex items-center gap-2.5">
+                      <span className="truncate text-[15px] font-semibold text-white">
+                        {ep.title}
+                      </span>
+                      {free ? (
+                        <span className="micro-label shrink-0 bg-white px-2 py-1 text-[9px] text-black">
+                          Grátis
+                        </span>
+                      ) : (
+                        <LockIcon className="h-4 w-4 shrink-0 text-white/40" />
+                      )}
+                    </span>
+                    <span className="mt-1 block text-xs text-white/50">
+                      {formatDuration(ep.duration_seconds)} min
+                    </span>
+                  </span>
+                  <PlayIcon className="h-4 w-4 shrink-0 text-white/40 transition group-hover:text-white" />
+                </Link>
+              </li>
+            );
+          })}
+        </ol>
+        <p className="mt-5 px-6 text-xs leading-relaxed text-white/45">
+          Episódios 1 e 2 liberados no teste grátis · assine para liberar todos
+        </p>
+      </div>
+
+      {/* CTA fixa no rodapé */}
+      <div className="fixed inset-x-0 bottom-0 z-40 mx-auto w-full max-w-[430px] border-t border-white/10 bg-[#0a0a0a]/95 px-6 py-4 backdrop-blur-sm">
+        <Link
+          href={`/assistir/${series.slug}/1`}
+          className="block bg-white px-6 py-4 text-center text-sm font-bold uppercase tracking-[0.14em] text-black transition hover:bg-white/85"
+        >
+          Assistir agora
+        </Link>
+      </div>
     </div>
   );
 }

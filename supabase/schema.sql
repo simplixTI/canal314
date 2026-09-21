@@ -37,7 +37,7 @@ create table if not exists public.series (
   title text not null,
   description text not null default '',
   category text not null check (category in ('religioso', 'politico')),
-  thumbnail text not null default '',
+  thumbnail text,
   display_order int not null default 0
 );
 
