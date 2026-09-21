@@ -168,6 +168,33 @@ export async function getEpisodeLikeState(
   return { liked: Boolean(data), count: count ?? 0 };
 }
 
+export async function getSeriesLikeState(
+  supabase: Supabase,
+  userId: string | null,
+  seriesId: string
+): Promise<{ liked: boolean; count: number }> {
+  const countQuery = supabase
+    .from("series_likes")
+    .select("*", { count: "exact", head: true })
+    .eq("series_id", seriesId);
+
+  if (!userId) {
+    const { count } = await countQuery;
+    return { liked: false, count: count ?? 0 };
+  }
+
+  const [{ count }, { data }] = await Promise.all([
+    countQuery,
+    supabase
+      .from("series_likes")
+      .select("user_id")
+      .eq("series_id", seriesId)
+      .eq("user_id", userId)
+      .maybeSingle(),
+  ]);
+  return { liked: Boolean(data), count: count ?? 0 };
+}
+
 export async function isSeriesListed(
   supabase: Supabase,
   userId: string,

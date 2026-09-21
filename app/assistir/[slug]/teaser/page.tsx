@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { getSeriesBySlug } from "@/lib/data";
+import { getSeriesBySlug, getSeriesLikeState, getUser, isSeriesListed } from "@/lib/data";
 import { getTeaser } from "@/lib/teasers";
+import PlayerActions from "@/components/PlayerActions";
 import SetupNotice from "@/components/SetupNotice";
 import TeaserVideo from "@/components/TeaserVideo";
 import { ChevronLeftIcon } from "@/components/icons";
@@ -30,11 +31,29 @@ export default async function TeaserPage({
   const series = await getSeriesBySlug(supabase, slug);
   if (!series) notFound();
 
+  const user = await getUser(supabase);
+  const likeState = await getSeriesLikeState(supabase, user?.id ?? null, series.id);
+  const listed = user ? await isSeriesListed(supabase, user.id, series.id) : false;
+
   return (
     <div className="relative h-dvh overflow-hidden bg-black">
       {/* Teaser vertical cobrindo a tela (9:16 centralizado no desktop) */}
       <div className="absolute inset-0 mx-auto sm:max-w-[56.25dvh]">
         <TeaserVideo src={teaser.url} />
+      </div>
+
+      {/* Rail de ações (curtir a série · lista · enviar) */}
+      <div className="pointer-events-none absolute inset-0 z-20 mx-auto sm:max-w-[56.25dvh]">
+        <div className="absolute right-3 top-1/2 -translate-y-1/2">
+          <PlayerActions
+            seriesId={series.id}
+            initialLiked={likeState.liked}
+            initialLikeCount={likeState.count}
+            initialListed={listed}
+            shareTitle={`${series.title} — Teaser grátis`}
+            sharePath={`/assistir/${series.slug}/teaser`}
+          />
+        </div>
       </div>
 
       {/* Chrome superior */}

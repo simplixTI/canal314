@@ -11,13 +11,14 @@ import {
 } from "./icons";
 
 interface PlayerActionsProps {
-  episodeId: string;
+  /** quando ausente, a curtida vale para a SÉRIE (modo teaser) */
+  episodeId?: string;
   seriesId: string;
   initialLiked: boolean;
   initialLikeCount: number;
   initialListed: boolean;
   shareTitle: string;
-  /** caminho absoluto da página do episódio (ex.: /assistir/slug/1) */
+  /** caminho absoluto da página (ex.: /assistir/slug/1 ou /assistir/slug/teaser) */
   sharePath: string;
 }
 
@@ -60,9 +61,13 @@ export default function PlayerActions({
       return;
     }
     const supabase = createClient();
-    const { error } = nextLiked
-      ? await supabase.from("episode_likes").insert({ user_id: userId, episode_id: episodeId })
-      : await supabase.from("episode_likes").delete().eq("user_id", userId).eq("episode_id", episodeId);
+    const { error } = episodeId
+      ? nextLiked
+        ? await supabase.from("episode_likes").insert({ user_id: userId, episode_id: episodeId })
+        : await supabase.from("episode_likes").delete().eq("user_id", userId).eq("episode_id", episodeId)
+      : nextLiked
+        ? await supabase.from("series_likes").insert({ user_id: userId, series_id: seriesId })
+        : await supabase.from("series_likes").delete().eq("user_id", userId).eq("series_id", seriesId);
 
     if (error) {
       setLiked(!nextLiked);

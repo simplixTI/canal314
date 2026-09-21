@@ -252,3 +252,33 @@ drop policy if exists "episode_unlocks_insert_own" on public.episode_unlocks;
 create policy "episode_unlocks_insert_own"
   on public.episode_unlocks for insert
   with check (auth.uid() = user_id);
+
+-- ============================================================
+-- Curtida de série (teaser, 2026-09)
+-- ============================================================
+
+-- series_likes: curtida do usuário na série (usado no player do teaser)
+create table if not exists public.series_likes (
+  user_id uuid not null references public.profiles (id) on delete cascade,
+  series_id uuid not null references public.series (id) on delete cascade,
+  created_at timestamptz not null default now(),
+  primary key (user_id, series_id)
+);
+
+alter table public.series_likes enable row level security;
+
+-- leitura pública (contagem); escrita apenas na própria linha
+drop policy if exists "series_likes_select_public" on public.series_likes;
+create policy "series_likes_select_public"
+  on public.series_likes for select
+  using (true);
+
+drop policy if exists "series_likes_insert_own" on public.series_likes;
+create policy "series_likes_insert_own"
+  on public.series_likes for insert
+  with check (auth.uid() = user_id);
+
+drop policy if exists "series_likes_delete_own" on public.series_likes;
+create policy "series_likes_delete_own"
+  on public.series_likes for delete
+  using (auth.uid() = user_id);
