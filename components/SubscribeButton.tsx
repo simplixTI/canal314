@@ -31,7 +31,7 @@ export default function SubscribeButton() {
       <button
         onClick={handleSubscribe}
         disabled={loading}
-        className="w-full bg-white px-6 py-4 text-sm font-bold uppercase tracking-[0.14em] text-black transition hover:bg-white/85 disabled:opacity-40"
+        className="w-full bg-accent px-6 py-4 text-sm font-bold uppercase tracking-[0.14em] text-white transition hover:bg-accent-hover disabled:opacity-40"
       >
         {loading ? "Ativando..." : `Assinar ${PRICE_LABEL}`}
       </button>

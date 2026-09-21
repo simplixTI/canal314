@@ -55,7 +55,7 @@ export function CancelSubscriptionButton() {
       <button
         onClick={handleCancel}
         disabled={loading}
-        className="text-sm text-white/55 underline decoration-white/30 underline-offset-4 transition hover:text-white disabled:opacity-40"
+        className="text-sm text-white/55 underline decoration-white/30 underline-offset-4 transition hover:text-accent disabled:opacity-40"
       >
         {loading ? "Cancelando..." : "Cancelar assinatura"}
       </button>

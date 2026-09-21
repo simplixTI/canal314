@@ -83,7 +83,7 @@ export default async function AccountPage() {
             </p>
             <Link
               href="/assinar"
-              className="mt-5 block bg-white px-6 py-3.5 text-center text-xs font-bold uppercase tracking-[0.14em] text-black transition hover:bg-white/85"
+              className="mt-5 block bg-accent px-6 py-3.5 text-center text-xs font-bold uppercase tracking-[0.14em] text-white transition hover:bg-accent-hover"
             >
               Assinar agora
             </Link>
@@ -101,7 +101,7 @@ export default async function AccountPage() {
             </p>
             <Link
               href="/assinar"
-              className="mt-5 block bg-white px-6 py-3.5 text-center text-xs font-bold uppercase tracking-[0.14em] text-black transition hover:bg-white/85"
+              className="mt-5 block bg-accent px-6 py-3.5 text-center text-xs font-bold uppercase tracking-[0.14em] text-white transition hover:bg-accent-hover"
             >
               Assinar R$19,90/mês
             </Link>
@@ -117,7 +117,7 @@ export default async function AccountPage() {
             Você ainda não assistiu nenhum episódio.{" "}
             <Link
               href="/"
-              className="text-white underline decoration-white/40 hover:decoration-white"
+              className="text-white underline decoration-white/40 transition hover:text-accent hover:decoration-accent"
             >
               Explorar séries
             </Link>

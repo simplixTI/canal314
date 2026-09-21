@@ -13,16 +13,18 @@ function Rail({
   title,
   flame,
   items,
+  id,
 }: {
   title: string;
   flame?: boolean;
   items: SeriesWithCount[];
+  id?: string;
 }) {
   if (items.length === 0) return null;
   return (
-    <section className="mt-12">
+    <section id={id} className="mt-12 scroll-mt-16">
       <div className="flex items-center gap-2 px-6">
-        {flame && <FlameIcon className="h-4 w-4 text-white/80" />}
+        {flame && <FlameIcon className="h-4 w-4 text-accent" />}
         <h2 className="micro-label text-white/80">{title}</h2>
         <div className="ml-2 h-px flex-1 bg-white/10" aria-hidden />
       </div>
@@ -95,7 +97,7 @@ export default async function HomePage() {
         <div className="absolute inset-x-0 bottom-0 px-6 pb-14">
           <div className="max-w-[560px]">
             <div className="flex items-center gap-2.5">
-              <span className="micro-label bg-white px-2.5 py-1.5 text-[10px] text-black">
+              <span className="micro-label bg-accent px-2.5 py-1.5 text-[10px] font-bold text-black">
                 Novo
               </span>
               <span className="micro-label border border-white/35 px-2.5 py-1.5 text-[10px] text-white/85">
@@ -115,7 +117,7 @@ export default async function HomePage() {
             <div className="mt-7 flex items-center gap-4">
               <Link
                 href={`/assistir/${hero.slug}/1`}
-                className="flex items-center gap-2.5 whitespace-nowrap rounded-full bg-white px-8 py-4 text-sm font-bold uppercase tracking-[0.14em] text-black transition hover:bg-white/85"
+                className="flex items-center gap-2.5 whitespace-nowrap rounded-full bg-accent px-8 py-4 text-sm font-bold uppercase tracking-[0.14em] text-white transition hover:bg-accent-hover"
               >
                 <PlayIcon className="h-4 w-4" />
                 Reproduzir
@@ -134,7 +136,7 @@ export default async function HomePage() {
       {/* Fileiras */}
       <Rail title="Novo Lançamento" items={novidades} />
       <Rail title="Mais Assistidos" flame items={maisAssistidos} />
-      <Rail title="Religioso" items={religioso} />
+      <Rail title="Religioso" items={religioso} id="categorias" />
       <Rail title="Político" items={politico} />
     </div>
   );

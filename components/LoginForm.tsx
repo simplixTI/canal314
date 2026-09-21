@@ -142,7 +142,7 @@ export default function LoginForm() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-white px-6 py-4 text-sm font-bold uppercase tracking-[0.14em] text-black transition hover:bg-white/85 disabled:opacity-40"
+            className="w-full bg-accent px-6 py-4 text-sm font-bold uppercase tracking-[0.14em] text-white transition hover:bg-accent-hover disabled:opacity-40"
           >
             {loading
               ? "Aguarde..."
@@ -174,7 +174,7 @@ export default function LoginForm() {
               setError(null);
               setNotice(null);
             }}
-            className="font-semibold text-white underline decoration-white/40 hover:decoration-white"
+            className="font-semibold text-white underline decoration-white/40 transition hover:text-accent hover:decoration-accent"
           >
             {mode === "signin" ? "Cadastre-se grátis" : "Entrar"}
           </button>

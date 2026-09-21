@@ -48,14 +48,14 @@ export default function Paywall({
         <p className="mt-4 text-sm leading-relaxed text-white/60">{message.body}</p>
         <Link
           href={href}
-          className="mt-8 block bg-white px-6 py-4 text-sm font-bold uppercase tracking-[0.14em] text-black transition hover:bg-white/85"
+          className="mt-8 block bg-accent px-6 py-4 text-sm font-bold uppercase tracking-[0.14em] text-white transition hover:bg-accent-hover"
         >
           {cta}
         </Link>
         {seriesTitle && seriesSlug && (
           <Link
             href={`/serie/${seriesSlug}`}
-            className="mt-5 inline-block text-sm text-white/60 underline decoration-white/30 transition hover:text-white"
+            className="mt-5 inline-block text-sm text-white/60 underline decoration-white/30 transition hover:text-accent"
           >
             Voltar para {seriesTitle}
           </Link>

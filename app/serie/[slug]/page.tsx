@@ -131,7 +131,7 @@ export default async function SeriesPage({
       <div className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-[#0a0a0a]/95 px-6 py-4 backdrop-blur-sm">
         <Link
           href={`/assistir/${series.slug}/1`}
-          className="mx-auto block w-full max-w-2xl bg-white px-6 py-4 text-center text-sm font-bold uppercase tracking-[0.14em] text-black transition hover:bg-white/85"
+          className="mx-auto block w-full max-w-2xl bg-accent px-6 py-4 text-center text-sm font-bold uppercase tracking-[0.14em] text-white transition hover:bg-accent-hover"
         >
           Assistir agora
         </Link>

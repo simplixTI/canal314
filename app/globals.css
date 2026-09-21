@@ -6,6 +6,8 @@
   --ground: #0a0a0a;
   --black: #000000;
   --ink: #ffffff;
+  --accent: #ff6a00;
+  --accent-hover: #ff7a1a;
 }
 
 html {
@@ -23,13 +25,13 @@ body {
 /* ---------- Browser surfaces, themed to the world ---------- */
 
 ::selection {
-  background: var(--ink);
+  background: var(--accent);
   color: var(--black);
 }
 
 input,
 textarea {
-  caret-color: var(--ink);
+  caret-color: var(--accent);
 }
 
 * {
@@ -48,7 +50,7 @@ textarea {
 }
 
 :focus-visible {
-  outline: 2px solid var(--ink);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
 

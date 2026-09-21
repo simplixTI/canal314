@@ -89,7 +89,7 @@ export default async function SubscribePage() {
               </p>
               <Link
                 href="/"
-                className="mt-5 inline-block text-sm text-white/60 underline decoration-white/30 transition hover:text-white"
+                className="mt-5 inline-block text-sm text-white/60 underline decoration-white/30 transition hover:text-accent"
               >
                 Voltar ao catálogo
               </Link>

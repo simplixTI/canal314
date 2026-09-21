@@ -15,7 +15,7 @@ Direção: PINADA pelo dono — "ReelShort imersivo" + "preto e branco puro" (ca
 
 THESIS: O catálogo é uma home de streaming clássica (referência explícita do dono: reelshort.com/pt) — hero cinematográfico do carro-chefe seguido de fileiras horizontais de mini-thumbs (Novo Lançamento, Mais Assistidos, por categoria). Recusa o feed vertical snap-scroll (rejeitado pelo dono em 2026-09) e o arranjo "hero + grid de cards pequenos".
 
-OWN-WORLD: monocromático absoluto. Chão quase-preto (#0a0a0a), tinta branca, cinzas neutros para hierarquia, hairlines 1px em branco a 8-12%. Nenhuma cor em nenhum estado (hover, badge, erro usa inversão P&B ou peso). Tipografia condensada pesada para títulos de série (display), micro-labels uppercase tracking largo, corpo em grotesk neutro. Grão de filme sutil e scrims de gradiente preto sobre a arte.
+OWN-WORLD: P&B + laranja restrito. Chão quase-preto (#0a0a0a), tinta branca, cinzas neutros para hierarquia, hairlines 1px em branco a 8-12%. UM acento laranja (#FF6A00, hover #FF7A1A) carrega ações e destaques: CTAs primários, item ativo do nav, chip "Novo", chama de "Mais Assistidos", hovers de links, foco, seleção, caret — sem gradientes nem glow; todo o resto permanece P&B (chips "Grátis"/"Em breve" invertidos, scrims, grão). Tipografia condensada pesada para títulos de série (display), micro-labels uppercase tracking largo, corpo em grotesk neutro. Grão de filme sutil e scrims de gradiente preto sobre a arte.
 
 STORY: o visitante entende em 3 segundos: "são micro-documentários verticais sobre figuras reais da fé e da política; posso assistir agora de graça". Acredita pela escala cinematográfica da arte e pelos números concretos (N episódios, 1-2 min, 3 dias grátis). Age: CTA primário sempre visível.
 
