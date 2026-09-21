@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getSeriesBySlug } from "@/lib/data";
 import { getTeaser } from "@/lib/teasers";
 import SetupNotice from "@/components/SetupNotice";
+import TeaserVideo from "@/components/TeaserVideo";
 import { ChevronLeftIcon } from "@/components/icons";
 
 export const dynamic = "force-dynamic";
@@ -33,13 +34,7 @@ export default async function TeaserPage({
     <div className="relative h-dvh overflow-hidden bg-black">
       {/* Teaser vertical cobrindo a tela (9:16 centralizado no desktop) */}
       <div className="absolute inset-0 mx-auto sm:max-w-[56.25dvh]">
-        <video
-          src={teaser.url}
-          autoPlay
-          playsInline
-          controls
-          className="h-full w-full object-cover"
-        />
+        <TeaserVideo src={teaser.url} />
       </div>
 
       {/* Chrome superior */}
