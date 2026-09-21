@@ -85,3 +85,37 @@ export function MicIcon(props: IconProps) {
     </svg>
   );
 }
+
+export function HeartIcon({ filled, ...props }: IconProps & { filled?: boolean }) {
+  return (
+    <svg {...base({ ...(filled ? { fill: "currentColor" } : {}), ...props })}>
+      <path d="M12 20.25c-4.9-3.1-8.25-6.05-8.25-10A4.6 4.6 0 0 1 8.25 5.5c1.55 0 2.95.75 3.75 1.95a4.68 4.68 0 0 1 3.75-1.95 4.6 4.6 0 0 1 4.5 4.75c0 3.95-3.35 6.9-8.25 10Z" />
+    </svg>
+  );
+}
+
+export function PlusIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M12 5.5v13M5.5 12h13" />
+    </svg>
+  );
+}
+
+export function ShareIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M12 14.5V3.5" />
+      <path d="m7.5 7 4.5-4.5L16.5 7" />
+      <path d="M8 10.5H6a2 2 0 0 0-2 2V18a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5.5a2 2 0 0 0-2-2h-2" />
+    </svg>
+  );
+}
+
+export function XIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="m6 6 12 12M18 6 6 18" />
+    </svg>
+  );
+}

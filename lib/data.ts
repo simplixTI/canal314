@@ -138,3 +138,61 @@ export async function getContinueWatching(
   }
   return items;
 }
+
+// ---------- Ações do player: curtidas + Minha Lista ----------
+
+export async function getEpisodeLikeState(
+  supabase: Supabase,
+  userId: string,
+  episodeId: string
+): Promise<{ liked: boolean; count: number }> {
+  const [{ count }, { data }] = await Promise.all([
+    supabase
+      .from("episode_likes")
+      .select("*", { count: "exact", head: true })
+      .eq("episode_id", episodeId),
+    supabase
+      .from("episode_likes")
+      .select("user_id")
+      .eq("episode_id", episodeId)
+      .eq("user_id", userId)
+      .maybeSingle(),
+  ]);
+  return { liked: Boolean(data), count: count ?? 0 };
+}
+
+export async function isSeriesListed(
+  supabase: Supabase,
+  userId: string,
+  seriesId: string
+): Promise<boolean> {
+  const { data } = await supabase
+    .from("list_entries")
+    .select("user_id")
+    .eq("series_id", seriesId)
+    .eq("user_id", userId)
+    .maybeSingle();
+  return Boolean(data);
+}
+
+export async function getMyList(
+  supabase: Supabase,
+  userId: string
+): Promise<Series[]> {
+  const { data } = await supabase
+    .from("list_entries")
+    .select("created_at, series:series(*)")
+    .eq("user_id", userId)
+    .order("created_at", { ascending: false });
+
+  if (!data) return [];
+
+  const items: Series[] = [];
+  for (const row of data) {
+    const series = (Array.isArray(row.series) ? row.series[0] : row.series) as
+      | Series
+      | null;
+    if (series) items.push(series);
+  }
+  return items;
+}

@@ -3,14 +3,17 @@ import { notFound, redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import {
   getEpisode,
+  getEpisodeLikeState,
   getProfile,
   getSeriesBySlug,
   getSubscription,
   getUser,
+  isSeriesListed,
   listEpisodes,
 } from "@/lib/data";
 import { canWatchEpisode } from "@/lib/access";
 import Paywall from "@/components/Paywall";
+import PlayerActions from "@/components/PlayerActions";
 import SetupNotice from "@/components/SetupNotice";
 import { ChevronLeftIcon } from "@/components/icons";
 
@@ -67,6 +70,11 @@ export default async function WatchPage({
   const prev = episodes.find((e) => e.number === episodeNumber - 1);
   const next = episodes.find((e) => e.number === episodeNumber + 1);
 
+  const [likeState, listed] = await Promise.all([
+    getEpisodeLikeState(supabase, user.id, episode.id),
+    isSeriesListed(supabase, user.id, series.id),
+  ]);
+
   return (
     <div className="relative h-dvh overflow-hidden bg-black">
       {/* Player vertical 9:16 cobrindo a tela inteira (no desktop, centralizado em 9:16 pela altura) */}
@@ -100,6 +108,21 @@ export default async function WatchPage({
           <span className="micro-label shrink-0 text-white/60">
             Ep {String(episode.number).padStart(2, "0")}/{String(episodes.length).padStart(2, "0")}
           </span>
+        </div>
+      </div>
+
+      {/* Rail de ações: Curtir · Lista · Enviar (borda direita do palco) */}
+      <div className="pointer-events-none absolute inset-0 z-20 mx-auto sm:max-w-[56.25dvh]">
+        <div className="absolute right-3 top-1/2 -translate-y-1/2">
+          <PlayerActions
+            episodeId={episode.id}
+            seriesId={series.id}
+            initialLiked={likeState.liked}
+            initialLikeCount={likeState.count}
+            initialListed={listed}
+            shareTitle={`${series.title} — Ep. ${episode.number}: ${episode.title}`}
+            sharePath={`/assistir/${series.slug}/${episode.number}`}
+          />
         </div>
       </div>
 

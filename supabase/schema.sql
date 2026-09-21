@@ -146,3 +146,59 @@ create policy "watch_progress_update_own"
   on public.watch_progress for update
   using (auth.uid() = user_id)
   with check (auth.uid() = user_id);
+
+-- ============================================================
+-- Ações do player (2026-09): curtidas de episódio + "Minha Lista"
+-- ============================================================
+
+-- episode_likes: curtida do usuário em um episódio
+create table if not exists public.episode_likes (
+  user_id uuid not null references public.profiles (id) on delete cascade,
+  episode_id uuid not null references public.episodes (id) on delete cascade,
+  created_at timestamptz not null default now(),
+  primary key (user_id, episode_id)
+);
+
+-- list_entries: série salva na "Minha Lista" do usuário
+create table if not exists public.list_entries (
+  user_id uuid not null references public.profiles (id) on delete cascade,
+  series_id uuid not null references public.series (id) on delete cascade,
+  created_at timestamptz not null default now(),
+  primary key (user_id, series_id)
+);
+
+alter table public.episode_likes enable row level security;
+alter table public.list_entries enable row level security;
+
+-- episode_likes: leitura pública (contagem de curtidas não é sensível);
+-- escrita apenas na própria linha
+drop policy if exists "episode_likes_select_public" on public.episode_likes;
+create policy "episode_likes_select_public"
+  on public.episode_likes for select
+  using (true);
+
+drop policy if exists "episode_likes_insert_own" on public.episode_likes;
+create policy "episode_likes_insert_own"
+  on public.episode_likes for insert
+  with check (auth.uid() = user_id);
+
+drop policy if exists "episode_likes_delete_own" on public.episode_likes;
+create policy "episode_likes_delete_own"
+  on public.episode_likes for delete
+  using (auth.uid() = user_id);
+
+-- list_entries: usuário lê e escreve apenas as próprias linhas
+drop policy if exists "list_entries_select_own" on public.list_entries;
+create policy "list_entries_select_own"
+  on public.list_entries for select
+  using (auth.uid() = user_id);
+
+drop policy if exists "list_entries_insert_own" on public.list_entries;
+create policy "list_entries_insert_own"
+  on public.list_entries for insert
+  with check (auth.uid() = user_id);
+
+drop policy if exists "list_entries_delete_own" on public.list_entries;
+create policy "list_entries_delete_own"
+  on public.list_entries for delete
+  using (auth.uid() = user_id);

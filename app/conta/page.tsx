@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import {
   getContinueWatching,
+  getMyList,
   getProfile,
   getSubscription,
   getUser,
@@ -17,8 +18,10 @@ import {
 import {
   CancelSubscriptionButton,
   LogoutButton,
+  RemoveListEntryButton,
 } from "@/components/AccountActions";
 import SetupNotice from "@/components/SetupNotice";
+import { categoryLabel } from "@/components/PosterArt";
 import { PlayIcon } from "@/components/icons";
 
 export const dynamic = "force-dynamic";
@@ -36,10 +39,11 @@ export default async function AccountPage() {
   const user = await getUser(supabase);
   if (!user) redirect("/login?next=/conta");
 
-  const [profile, subscription, continueWatching] = await Promise.all([
+  const [profile, subscription, continueWatching, myList] = await Promise.all([
     getProfile(supabase, user.id),
     getSubscription(supabase, user.id),
     getContinueWatching(supabase, user.id),
+    getMyList(supabase, user.id),
   ]);
 
   const active = isSubscriptionActive(subscription);
@@ -144,6 +148,39 @@ export default async function AccountPage() {
                   </span>
                   <PlayIcon className="h-4 w-4 shrink-0 text-white/40 transition group-hover:text-white" />
                 </Link>
+              </li>
+            ))}
+          </ol>
+        )}
+      </section>
+
+      {/* Minha Lista */}
+      <section className="mt-10">
+        <p className="micro-label text-white/50">Minha Lista</p>
+        {myList.length === 0 ? (
+          <p className="mt-4 text-sm leading-relaxed text-white/55">
+            Nenhuma série salva ainda. Toque em &quot;Lista&quot; no player para
+            guardar uma série aqui.
+          </p>
+        ) : (
+          <ol className="mt-4 border-t border-white/10">
+            {myList.map((item) => (
+              <li
+                key={item.id}
+                className="flex items-center gap-4 border-b border-white/10 py-4"
+              >
+                <Link
+                  href={`/serie/${item.slug}`}
+                  className="group min-w-0 flex-1 transition hover:bg-white/[0.04]"
+                >
+                  <span className="block truncate text-sm font-semibold">
+                    {item.title}
+                  </span>
+                  <span className="mt-1 block text-xs text-white/50">
+                    {categoryLabel(item.category)}
+                  </span>
+                </Link>
+                <RemoveListEntryButton seriesId={item.id} />
               </li>
             ))}
           </ol>
