@@ -83,6 +83,16 @@ where slug = 'pastor-everaldo-dias';
 
 Se `thumbnail` estiver vazio (`null`), o catálogo mostra um pôster tipográfico com o título da série.
 
+## Teasers grátis
+
+Teasers são MP4 verticais hospedados no próprio app — grátis para todos, sem login. Para adicionar:
+
+1. Comprima o vídeo (720×1280, ~CRF 27) e salve em `public/teasers/<slug-da-serie>.mp4`:
+   `ffmpeg -i teaser-original.mp4 -vf "scale=720:1280" -c:v libx264 -crf 27 -c:a aac -b:a 96k -movflags +faststart public/teasers/<slug>.mp4`
+2. Registre em `lib/teasers.ts` (slug → url e duração).
+
+O teaser aparece como primeiro item da página da série ("Teaser · Grátis · sem login") e, se a série ainda não tem episódios, o card da home vira link com chip "Teaser grátis".
+
 ## Deploy na Vercel
 
 1. Crie um repositório no GitHub e suba o código:

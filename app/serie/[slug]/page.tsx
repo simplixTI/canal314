@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { getSeriesBySlug, listEpisodes } from "@/lib/data";
 import { FREE_EPISODES_PER_SERIES, UNLOCK_COST, formatDuration } from "@/lib/access";
+import { getTeaser } from "@/lib/teasers";
 import PosterArt, { categoryLabel } from "@/components/PosterArt";
 import SetupNotice from "@/components/SetupNotice";
 import { ChevronLeftIcon, CoinIcon, LockIcon, PlayIcon } from "@/components/icons";
@@ -28,6 +29,7 @@ export default async function SeriesPage({
   if (!series) notFound();
 
   const episodes = await listEpisodes(supabase, series.id);
+  const teaser = getTeaser(slug);
   const hasPhoto = Boolean(series.thumbnail);
 
   return (
@@ -88,6 +90,32 @@ export default async function SeriesPage({
       <div className="mx-auto mt-10 w-full max-w-2xl">
         <p className="micro-label px-6 text-white/50">Episódios</p>
         <ol className="mt-4 border-t border-white/10">
+          {teaser && (
+            <li>
+              <Link
+                href={`/assistir/${series.slug}/teaser`}
+                className="group flex items-center gap-5 border-b border-white/10 px-6 py-5 transition hover:bg-white/[0.04]"
+              >
+                <span className="w-8 shrink-0 font-[family-name:var(--font-display)] text-2xl font-medium text-accent">
+                  ▶
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="flex items-center gap-2.5">
+                    <span className="truncate text-[15px] font-semibold text-white">
+                      Teaser
+                    </span>
+                    <span className="micro-label shrink-0 bg-accent px-2 py-1 text-[9px] text-white">
+                      Grátis
+                    </span>
+                  </span>
+                  <span className="mt-1 block text-xs text-white/50">
+                    {teaser.duration} min · sem login
+                  </span>
+                </span>
+                <PlayIcon className="h-4 w-4 shrink-0 text-white/40 transition group-hover:text-white" />
+              </Link>
+            </li>
+          )}
           {episodes.map((ep) => {
             const free = ep.number <= FREE_EPISODES_PER_SERIES;
             return (
@@ -137,10 +165,14 @@ export default async function SeriesPage({
       {/* CTA fixa no rodapé */}
       <div className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-[#0a0a0a]/95 px-6 py-4 backdrop-blur-sm">
         <Link
-          href={`/assistir/${series.slug}/1`}
+          href={
+            episodes.length > 0
+              ? `/assistir/${series.slug}/1`
+              : `/assistir/${series.slug}/teaser`
+          }
           className="mx-auto block w-full max-w-2xl bg-accent px-6 py-4 text-center text-sm font-bold uppercase tracking-[0.14em] text-white transition hover:bg-accent-hover"
         >
-          Assistir agora
+          {episodes.length > 0 ? "Assistir agora" : "Assistir ao teaser"}
         </Link>
       </div>
     </div>

@@ -125,6 +125,19 @@ values
   )
 on conflict (slug) do nothing;
 
+-- ---------- Augusto Cury (com teaser grátis) ----------
+insert into public.series (slug, title, description, category, thumbnail, display_order)
+values
+  (
+    'augusto-cury',
+    'Augusto Cury: O Homem antes do Candidato',
+    'Antes dos palanques e dos votos, a história do homem — a trajetória contada na voz de quem viveu.',
+    'religioso',
+    null,
+    14
+  )
+on conflict (slug) do nothing;
+
 -- ---------- Pastor Everaldo Dias ----------
 insert into public.episodes (series_id, number, title, youtube_id, duration_seconds)
 select s.id, e.number, e.title, e.youtube_id, e.duration_seconds
