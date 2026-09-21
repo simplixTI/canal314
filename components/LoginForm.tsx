@@ -85,7 +85,7 @@ export default function LoginForm() {
     <div className="flex min-h-dvh items-center justify-center px-6 py-16">
       <div className="w-full max-w-xs">
         <div className="flex justify-center">
-          <Logo className="h-10" />
+          <Logo size="lg" />
         </div>
 
         <h1 className="mt-10 text-center font-[family-name:var(--font-display)] text-4xl font-semibold uppercase leading-[0.95] tracking-[-0.02em]">

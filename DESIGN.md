@@ -45,7 +45,8 @@ Seleção invertida (branco/preto), caret branco, scrollbar fina escura (oculta 
 
 | Asset | Origem |
 |---|---|
-| `public/logo.png` | Marca do dono (branca sobre preto); renderizada com `mix-blend-screen` para o fundo preto da arte sumir |
+| `public/logo.png` | Marca raster original do dono (arquivo de referência; não é mais usada na UI) |
+| Marca tipográfica (`components/Logo.tsx`) | MicIcon desenhado + "canal" em micro-label sobre "314!" em Oswald bold — usada no header e no login, tamanhos `sm`/`lg` |
 | `public/thumbnails/pastor-everaldo-dias.png` | Foto/pôster real do dono; renderizada sempre em P&B (`grayscale`), crop `object-[50%_15%]` |
 | `public/noise.png` | Gerado por `scripts/generate-noise.mjs` (tile 180×180 determinístico, seed 0x314) — grão de filme do app e dos pôsteres |
 | Capas tipográficas (Getúlio Vargas, Padre Cícero, Chico Xavier + fallback) | Autorais em `components/PosterArt.tsx`: tipo condensado, selo "314 NO DETALHE", moldura hairline, marca 314, grão — uma composição por série, como capas de livro |

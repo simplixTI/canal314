@@ -73,3 +73,15 @@ export function FlameIcon(props: IconProps) {
     </svg>
   );
 }
+
+export function MicIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <rect x="9" y="2.5" width="6" height="11" rx="3" />
+      <path d="M9.5 6.5h5M9.5 9.5h5" />
+      <path d="M5.5 10.5a6.5 6.5 0 0 0 13 0" />
+      <path d="M12 17v4" />
+      <path d="M8.5 21h7" />
+    </svg>
+  );
+}
