@@ -6,8 +6,8 @@ import Link from "next/link";
  * branco sobre o tema escuro. sm = header, lg = login.
  */
 const sizes = {
-  sm: "h-9",
-  lg: "h-[52px]",
+  sm: "h-[45px]",
+  lg: "h-[65px]",
 } as const;
 
 export default function Logo({ size = "sm" }: { size?: keyof typeof sizes }) {
