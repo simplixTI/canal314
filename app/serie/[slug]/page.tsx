@@ -53,23 +53,25 @@ export default async function SeriesPage({
         </Link>
         {hasPhoto && (
           <div className="absolute inset-x-0 bottom-0 px-6 pb-6">
-            <p className="micro-label text-white/70">
-              {categoryLabel(series.category)}
-            </p>
-            <h1 className="mt-3 font-[family-name:var(--font-display)] text-5xl font-semibold uppercase leading-[0.95] tracking-[-0.02em]">
-              {series.title}
-            </h1>
-            <p className="mt-3 text-sm text-white/60">
-              {episodes.length}{" "}
-              {episodes.length === 1 ? "episódio" : "episódios"} · 1–2 min cada
-            </p>
+            <div className="mx-auto w-full max-w-2xl">
+              <p className="micro-label text-white/70">
+                {categoryLabel(series.category)}
+              </p>
+              <h1 className="mt-3 font-[family-name:var(--font-display)] text-5xl font-semibold uppercase leading-[0.95] tracking-[-0.02em]">
+                {series.title}
+              </h1>
+              <p className="mt-3 text-sm text-white/60">
+                {episodes.length}{" "}
+                {episodes.length === 1 ? "episódio" : "episódios"} · 1–2 min cada
+              </p>
+            </div>
           </div>
         )}
       </div>
 
       {/* Capas tipográficas carregam o título na arte; aqui vai a ficha da série */}
       {!hasPhoto && (
-        <div className="mt-6 px-6">
+        <div className="mx-auto mt-6 w-full max-w-2xl px-6">
           <p className="micro-label text-white/50">
             {categoryLabel(series.category)} · {episodes.length}{" "}
             {episodes.length === 1 ? "episódio" : "episódios"} · 1–2 min cada
@@ -78,12 +80,12 @@ export default async function SeriesPage({
         </div>
       )}
 
-      <p className="mt-6 px-6 text-sm leading-relaxed text-white/70">
+      <p className="mx-auto mt-6 w-full max-w-2xl px-6 text-sm leading-relaxed text-white/70">
         {series.description}
       </p>
 
       {/* Episódios */}
-      <div className="mt-10">
+      <div className="mx-auto mt-10 w-full max-w-2xl">
         <p className="micro-label px-6 text-white/50">Episódios</p>
         <ol className="mt-4 border-t border-white/10">
           {episodes.map((ep) => {
@@ -126,10 +128,10 @@ export default async function SeriesPage({
       </div>
 
       {/* CTA fixa no rodapé */}
-      <div className="fixed inset-x-0 bottom-0 z-40 mx-auto w-full max-w-[430px] border-t border-white/10 bg-[#0a0a0a]/95 px-6 py-4 backdrop-blur-sm">
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-[#0a0a0a]/95 px-6 py-4 backdrop-blur-sm">
         <Link
           href={`/assistir/${series.slug}/1`}
-          className="block bg-white px-6 py-4 text-center text-sm font-bold uppercase tracking-[0.14em] text-black transition hover:bg-white/85"
+          className="mx-auto block w-full max-w-2xl bg-white px-6 py-4 text-center text-sm font-bold uppercase tracking-[0.14em] text-black transition hover:bg-white/85"
         >
           Assistir agora
         </Link>

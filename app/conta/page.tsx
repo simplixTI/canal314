@@ -47,7 +47,7 @@ export default async function AccountPage() {
   const daysLeft = trialDaysRemaining(profile);
 
   return (
-    <div className="px-6 pb-16 pt-24">
+    <div className="mx-auto w-full max-w-xl px-6 pb-16 pt-24">
       <h1 className="font-[family-name:var(--font-display)] text-4xl font-semibold uppercase leading-[0.95] tracking-[-0.02em]">
         Minha conta
       </h1>

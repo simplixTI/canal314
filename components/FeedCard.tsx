@@ -21,7 +21,7 @@ export default function FeedCard({
   const hasPhoto = Boolean(series.thumbnail);
 
   return (
-    <section className="relative h-[92dvh] snap-start overflow-hidden">
+    <section className="relative h-dvh snap-start overflow-hidden">
       <Link
         href={`/serie/${series.slug}`}
         aria-label={`Abrir a série ${series.title}`}
@@ -41,6 +41,7 @@ export default function FeedCard({
       )}
 
       <div className={`absolute inset-x-0 bottom-0 px-6 pb-12 ${first ? "rise-in" : ""}`}>
+        <div className="mx-auto w-full max-w-xl">
         {hasPhoto && (
           <>
             <p className="micro-label text-white/70">
@@ -69,6 +70,7 @@ export default function FeedCard({
           >
             Teste grátis
           </Link>
+        </div>
         </div>
       </div>
 

@@ -69,8 +69,8 @@ export default async function WatchPage({
 
   return (
     <div className="relative h-dvh overflow-hidden bg-black">
-      {/* Player vertical 9:16 cobrindo a tela inteira */}
-      <div className="absolute inset-0 [container-type:size]">
+      {/* Player vertical 9:16 cobrindo a tela inteira (no desktop, centralizado em 9:16 pela altura) */}
+      <div className="absolute inset-0 mx-auto sm:max-w-[56.25dvh] [container-type:size]">
         <div
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
           style={{ width: "max(100cqw, 56.25cqh)", height: "max(100cqh, 177.78cqw)" }}
@@ -87,7 +87,7 @@ export default async function WatchPage({
       </div>
 
       {/* Chrome superior */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 z-10">
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-10 mx-auto sm:max-w-[56.25dvh]">
         <div aria-hidden className="scrim-top absolute inset-0 h-24" />
         <div className="relative flex items-center justify-between px-5 py-4">
           <Link
@@ -104,7 +104,7 @@ export default async function WatchPage({
       </div>
 
       {/* Chrome inferior */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10">
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 mx-auto sm:max-w-[56.25dvh]">
         <div aria-hidden className="scrim-bottom absolute inset-0 h-32" />
         <div className="relative px-5 pb-6">
           <p className="text-sm font-medium text-white/85">

@@ -34,15 +34,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" className={`${display.variable} ${body.variable}`}>
-      <body className="min-h-dvh">
-        {/* Coluna de celular centralizada; laterais em preto absoluto no desktop */}
-        <div className="relative mx-auto min-h-dvh w-full max-w-[430px] border-x border-white/10 bg-[#0a0a0a]">
+      <body className="min-h-dvh bg-[#0a0a0a]">
+        <div className="relative min-h-dvh w-full">
           <Header />
           {children}
           {/* Grão de filme sobre o app inteiro */}
           <div
             aria-hidden
-            className="film-grain pointer-events-none fixed inset-0 z-[60] mx-auto w-full max-w-[430px] opacity-[0.05]"
+            className="film-grain pointer-events-none fixed inset-0 z-[60] w-full opacity-[0.05]"
           />
         </div>
       </body>

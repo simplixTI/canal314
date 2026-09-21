@@ -13,7 +13,7 @@ export default function HeaderShell({ loggedIn }: { loggedIn: boolean }) {
   if (pathname.startsWith("/assistir")) return null;
 
   return (
-    <header className="pointer-events-none fixed inset-x-0 top-0 z-50 mx-auto w-full max-w-[430px]">
+    <header className="pointer-events-none fixed inset-x-0 top-0 z-50 w-full">
       <div className="scrim-top absolute inset-0 h-20" aria-hidden />
       <div className="relative flex items-center justify-between px-5 py-4">
         <span className="pointer-events-auto">

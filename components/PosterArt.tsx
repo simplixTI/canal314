@@ -160,7 +160,7 @@ export default function PosterArt({ slug, title, category, thumbnail, priority }
           alt={`Pôster da série ${title}`}
           fill
           priority={priority}
-          sizes="(max-width: 430px) 100vw, 430px"
+          sizes="100vw"
           className="object-cover object-[50%_15%] brightness-[0.92] grayscale contrast-[1.05]"
         />
         <div aria-hidden className="scrim-vignette absolute inset-0" />

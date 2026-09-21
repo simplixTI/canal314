@@ -21,15 +21,15 @@ Definidos em `app/globals.css` (`:root`, utilities `.micro-label`, `.scrim-botto
 ## Tipografia
 
 - **Display:** Oswald (500/600/700, `next/font/google`, self-hosted) — uppercase, tracking -0.02em, leading 0.92–0.95. Títulos de série, preços, estados vazios. Máx. ~4.6rem nas capas.
-- **Corpo e micro-labels:** Inter (400–700) — micro-labels em 11px semibold uppercase tracking 0.22em; corpo 14–15px com medida curta (coluna de 430px).
+- **Corpo e micro-labels:** Inter (400–700) — micro-labels em 11px semibold uppercase tracking 0.22em; corpo 14–15px com medida curta (conteúdo de texto em `max-w-xl`/`max-w-2xl` centrado).
 - Variáveis: `--font-display`, `--font-body` (carregadas em `app/layout.tsx`).
 
 ## Layout
 
-- Coluna de celular `max-w-[430px]` centralizada, `border-x border-white/10`; laterais em preto absoluto no desktop. O app é mobile por natureza.
-- **Home `/`**: container `h-dvh snap-y snap-mandatory`, cada série em seção de `92dvh` — pôster edge-to-edge, scrim preto, micro-label categoria, título display, meta (N episódios · 1–2 min), CTA branco sólido "Assistir agora" + link "Teste grátis", deixa de scroll ("Deslize" + chevron animado). Capas tipográficas carregam o título na arte e não recebem scrim nem título sobreposto (evita duplicidade); capas fotográficas recebem scrim + título.
-- **`/serie/[slug]`**: abertura de 58dvh com a arte, ficha (categoria/meta/descrição), lista de episódios em fileiras numeradas (numeral display 01, título, duração; chip "Grátis" invertido branco nos eps 1–2; cadeado nos demais), CTA fixa no rodapé.
-- **`/assistir/[slug]/[ep]`**: iframe 9:16 em *cover* sobre toda a viewport (container queries `cqw/cqh`), chrome superior (voltar + título + contador Ep NN/NN) e inferior (título do ep + anterior/próximo) sobre scrims.
+- **Largura total (fullscreen) em todos os viewports**: sem coluna de celular — o feed e o player sangram de borda a borda; blocos de texto/CTA ficam em colunas centradas `max-w-xl`/`max-w-2xl`. O app é mobile-first e responsivo.
+- **Home `/`**: container `h-dvh snap-y snap-mandatory`, cada série em seção de `100dvh` — pôster edge-to-edge, scrim preto, micro-label categoria, título display, meta (N episódios · 1–2 min), CTA branco sólido "Assistir agora" + link "Teste grátis", deixa de scroll ("Deslize" + chevron animado). Capas tipográficas carregam o título na arte e não recebem scrim nem título sobreposto (evita duplicidade); capas fotográficas recebem scrim + título.
+- **`/serie/[slug]`**: abertura de 58dvh com a arte, ficha (categoria/meta/descrição), lista de episódios em fileiras numeradas (numeral display 01, título, duração; chip "Grátis" invertido branco nos eps 1–2; cadeado nos demais) em coluna `max-w-2xl`, CTA fixa no rodapé.
+- **`/assistir/[slug]/[ep]`**: iframe 9:16 em *cover* sobre toda a viewport (container queries `cqw/cqh`); no desktop (`sm:`) o palco e o chrome ficam limitados a `56.25dvh` de largura (proporção 9:16 pela altura), centralizados. Chrome superior (voltar + título + contador Ep NN/NN) e inferior (título do ep + anterior/próximo) sobre scrims.
 - **`/login`, `/assinar`, `/conta`, paywall, 404**: mesma gramática — título display centrado, micro-labels, inputs com hairline inferior, botões brancos sólidos, divisórias hairline, marca "314" gigante a 4–5% de opacidade.
 - **Header**: chrome mínimo fixo (logo pequena + Entrar/Conta) sobre scrim superior; some na rota `/assistir` (player tem chrome próprio).
 
