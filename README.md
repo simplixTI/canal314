@@ -115,7 +115,7 @@ app/
 lib/
   access.ts                 Regras de acesso (trial x assinatura)
   billing/                  Provedor de cobrança (mock; plugável)
-  supabase/                 Clients (server, browser, middleware)
+  supabase/                 Clients (server e browser)
 supabase/
   schema.sql                Tabelas + RLS + gatilho de perfil
   seed.sql                  Séries e episódios de exemplo

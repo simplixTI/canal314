@@ -23,8 +23,8 @@ export async function createClient() {
             cookieStore.set(name, value, options)
           );
         } catch {
-          // Chamado a partir de um Server Component — o middleware
-          // cuida da atualização da sessão.
+          // Chamado a partir de um Server Component (não pode escrever cookies).
+          // A renovação do token acontece no client browser, que atualiza os cookies.
         }
       },
     },
