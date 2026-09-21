@@ -6,6 +6,7 @@ import PosterArt, { categoryLabel } from "@/components/PosterArt";
 import RailCard from "@/components/RailCard";
 import SetupNotice from "@/components/SetupNotice";
 import { FlameIcon, PlayIcon } from "@/components/icons";
+import { getTeaser } from "@/lib/teasers";
 
 export const dynamic = "force-dynamic";
 
@@ -69,7 +70,11 @@ export default async function HomePage() {
 
   const hero = series.find((s) => s.display_order === 1) ?? series[0];
   const novidades = [...series]
-    .sort((a, b) => b.display_order - a.display_order)
+    .sort((a, b) => {
+      const aConteudo = a.episode_count > 0 || getTeaser(a.slug) ? 1 : 0;
+      const bConteudo = b.episode_count > 0 || getTeaser(b.slug) ? 1 : 0;
+      return bConteudo - aConteudo || b.display_order - a.display_order;
+    })
     .slice(0, 8);
   const maisAssistidos = [...series]
     .sort(
