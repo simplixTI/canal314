@@ -1,12 +1,14 @@
 import Link from "next/link";
 
 /**
- * Logo raster da marca — ícone dourado sobre preto, feito para o tema
- * escuro (NÃO usar filtro invert). sm = header, lg = login.
+ * Marca raster — ícone dourado sobre preto, feito para o tema escuro
+ * (NÃO usar filtro invert). O arquivo já vem recortado na arte (sem a margem
+ * transparente do master), então a altura da caixa é a altura da marca.
+ * sm = header, lg = login. Regerar com `python scripts/generate-icons.py`.
  */
 const sizes = {
-  sm: "h-[45px]",
-  lg: "h-[65px]",
+  sm: "h-[54px]",
+  lg: "h-[78px]",
 } as const;
 
 export default function Logo({ size = "sm" }: { size?: keyof typeof sizes }) {
@@ -15,7 +17,9 @@ export default function Logo({ size = "sm" }: { size?: keyof typeof sizes }) {
     <img
       src="/logo.png"
       alt="Canal314"
-      className={`${sizes[size]} w-auto rounded-lg`}
+      width={301}
+      height={288}
+      className={`${sizes[size]} w-auto`}
     />
   );
 }

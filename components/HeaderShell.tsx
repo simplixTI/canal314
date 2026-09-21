@@ -31,7 +31,7 @@ export default function HeaderShell({
 
   return (
     <header className="pointer-events-none fixed inset-x-0 top-0 z-50 w-full">
-      <div className="scrim-top absolute inset-0 h-24 sm:h-20" aria-hidden />
+      <div className="scrim-top absolute inset-0 h-28 sm:h-24" aria-hidden />
       <div className="relative flex flex-wrap items-center px-5 py-4">
         <span className="pointer-events-auto order-1">
           <LogoLink />

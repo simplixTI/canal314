@@ -28,7 +28,7 @@
 - Estilo: streaming clássico (referência reelshort.com/pt) — hero do carro-chefe + fileiras horizontais; player vertical imersivo
 - Cor: preto `#0a0a0a` + branco + **laranja `#FF6A00`** (token `--accent`; laranja = ação/destaque)
 - Tipografia: Oswald (títulos) + Inter (corpo), self-hosted via next/font
-- Logo: raster original `public/logo.png` com filtro `invert` no header (45px) e login (65px)
+- Logo: ícone dourado (sem `invert` — a arte já é para tema escuro), recortado na marca e servido em `public/logo.png` (94 KB, era 1,1 MB): header 54px, login 78px. Master em `assets/logo-master.png`; ícones (`app/icon.png`, `apple-icon.png`, `favicon.ico` 16→256) saem de `python scripts/generate-icons.py`
 - Detalhes: DESIGN.md (sistema completo), PRODUCT.md (verdades do produto), `.impeccable/surfaces/` (contratos)
 
 ## Feito ✅
@@ -66,7 +66,7 @@
 - [ ] **IDs reais do YouTube** dos episódios (hoje todos usam placeholder `dQw4w9WgXcQ`) — passar série + nº do ep + ID; atualizar via SQL Editor (snippet no README)
 - [ ] **Vídeo do PodCast está PRIVADO** — mudar para "Não listado" no YouTube Studio, senão ninguém assiste
 - [ ] Confirmação de e-mail do Supabase está LIGADA — avaliar desligar em Authentication → Providers → Email (facilita cadastro)
-- [ ] Arquivo `public/logo_.png` subido mas não usado — confirmar se troca a logo do header
+- [ ] Arquivo `public/logo_.png` (marca preta horizontal antiga) continua sem uso — confirmar se pode apagar
 
 ### Produto / técnica
 - [ ] Gateway de pagamento REAL (Mercado Pago recomendado: Pix + recorrência) — plugar nos pacotes de coins e no 314 Pass via webhook (`lib/billing/` isolado para isso)
