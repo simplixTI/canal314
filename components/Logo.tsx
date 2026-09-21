@@ -1,9 +1,8 @@
 import Link from "next/link";
 
 /**
- * Logo raster original da marca — o PNG é traço preto sobre fundo
- * transparente (feito para fundos claros); o filtro `invert` o torna
- * branco sobre o tema escuro. sm = header, lg = login.
+ * Logo raster da marca — ícone dourado sobre preto, feito para o tema
+ * escuro (NÃO usar filtro invert). sm = header, lg = login.
  */
 const sizes = {
   sm: "h-[45px]",
@@ -16,7 +15,7 @@ export default function Logo({ size = "sm" }: { size?: keyof typeof sizes }) {
     <img
       src="/logo.png"
       alt="Canal314"
-      className={`${sizes[size]} w-auto invert`}
+      className={`${sizes[size]} w-auto rounded-lg`}
     />
   );
 }
