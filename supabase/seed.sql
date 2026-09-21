@@ -132,8 +132,8 @@ values
     'augusto-cury',
     'Augusto Cury: O Homem antes do Candidato',
     'Antes dos palanques e dos votos, a história do homem — a trajetória contada na voz de quem viveu.',
-    'religioso',
-    null,
+    'politico',
+    '/thumbnails/augusto-cury.png',
     14
   )
 on conflict (slug) do nothing;
