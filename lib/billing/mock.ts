@@ -13,8 +13,6 @@ import type { SupabaseClient } from "@supabase/supabase-js";
  *    via variável de ambiente (ex.: BILLING_PROVIDER=mercadopago).
  */
 
-const TRIAL_DAYS = 3;
-
 export interface BillingProvider {
   name: string;
   activate(userId: string): Promise<void>;
@@ -52,5 +50,3 @@ export function createMockProvider(supabase: SupabaseClient): BillingProvider {
     },
   };
 }
-
-export { TRIAL_DAYS };

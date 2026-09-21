@@ -44,7 +44,7 @@ export default function LoginForm() {
         });
         if (error) throw error;
         if (data.session) {
-          // Confirmação de e-mail desativada: entra direto com trial ativo
+          // Confirmação de e-mail desativada: entra direto
           router.push(next);
           router.refresh();
         } else {
@@ -94,7 +94,7 @@ export default function LoginForm() {
         <p className="mt-3 text-center text-sm text-white/55">
           {mode === "signin"
             ? "Acesse sua conta para continuar assistindo"
-            : "3 dias de teste grátis · sem cartão de crédito"}
+            : "Episódios 1 e 2 grátis · desbloqueie os demais com 314Coins"}
         </p>
 
         <form onSubmit={handleSubmit} className="mt-10 space-y-6">
@@ -148,7 +148,7 @@ export default function LoginForm() {
               ? "Aguarde..."
               : mode === "signin"
                 ? "Entrar"
-                : "Começar teste grátis"}
+                : "Criar conta grátis"}
           </button>
         </form>
 

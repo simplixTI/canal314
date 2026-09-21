@@ -1,17 +1,21 @@
 import Link from "next/link";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import {
+  getCoinBalance,
   getEpisode,
   getEpisodeLikeState,
-  getProfile,
+  getEpisodeUnlock,
   getSeriesBySlug,
   getSubscription,
   getUser,
   isSeriesListed,
   listEpisodes,
 } from "@/lib/data";
-import { canWatchEpisode } from "@/lib/access";
+import {
+  canWatchEpisode,
+  isSubscriptionActive,
+} from "@/lib/access";
 import Paywall from "@/components/Paywall";
 import PlayerActions from "@/components/PlayerActions";
 import SetupNotice from "@/components/SetupNotice";
@@ -44,36 +48,52 @@ export default async function WatchPage({
   if (!episode) notFound();
 
   // ---- Verificação de acesso (server-side) ----
+  // Episódios 1 e 2 são grátis para todos, inclusive anônimos.
   const user = await getUser(supabase);
-  if (!user) {
-    redirect(`/login?next=/assistir/${slug}/${episodeNumber}`);
+
+  let hasPass = false;
+  let unlocked = false;
+  let coinBalance = 0;
+  if (user) {
+    const [subscription, balance, hasUnlock] = await Promise.all([
+      getSubscription(supabase, user.id),
+      getCoinBalance(supabase, user.id),
+      getEpisodeUnlock(supabase, user.id, episode.id),
+    ]);
+    hasPass = isSubscriptionActive(subscription);
+    coinBalance = balance;
+    unlocked = hasUnlock;
   }
 
-  const [profile, subscription] = await Promise.all([
-    getProfile(supabase, user.id),
-    getSubscription(supabase, user.id),
-  ]);
-
-  const access = canWatchEpisode(user.id, profile, subscription, episode);
+  const access = canWatchEpisode(user?.id ?? null, hasPass, unlocked, episode);
   if (!access.allowed) {
-    return <Paywall reason={access.reason} seriesTitle={series.title} seriesSlug={series.slug} />;
+    return (
+      <Paywall
+        reason={access.reason}
+        seriesTitle={series.title}
+        seriesSlug={series.slug}
+        episodeId={episode.id}
+        coinBalance={coinBalance}
+        loginNext={`/assistir/${slug}/${episodeNumber}`}
+      />
+    );
   }
 
-  // Registra o progresso ("continuar assistindo") — falha silenciosa é ok
-  await supabase.from("watch_progress").upsert({
-    user_id: user.id,
-    episode_id: episode.id,
-    watched_at: new Date().toISOString(),
-  });
+  // Registra o progresso ("continuar assistindo") — apenas logado
+  if (user) {
+    await supabase.from("watch_progress").upsert({
+      user_id: user.id,
+      episode_id: episode.id,
+      watched_at: new Date().toISOString(),
+    });
+  }
 
   const episodes = await listEpisodes(supabase, series.id);
   const prev = episodes.find((e) => e.number === episodeNumber - 1);
   const next = episodes.find((e) => e.number === episodeNumber + 1);
 
-  const [likeState, listed] = await Promise.all([
-    getEpisodeLikeState(supabase, user.id, episode.id),
-    isSeriesListed(supabase, user.id, series.id),
-  ]);
+  const likeState = await getEpisodeLikeState(supabase, user?.id ?? null, episode.id);
+  const listed = user ? await isSeriesListed(supabase, user.id, series.id) : false;
 
   return (
     <div className="relative h-dvh overflow-hidden bg-black">

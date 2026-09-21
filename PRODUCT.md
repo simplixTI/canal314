@@ -14,8 +14,9 @@ Plataforma de streaming de micro-documentários verticais (episódios de 1–2 m
 Brasileiros no celular, consumindo vídeo curto vertical (hábito TikTok/Reels/Shorts), interessados em histórias reais de fé e política. Uso à noite, tela pequena, polegar, atenção de segundos.
 
 ## Modelo de negócio
-- Trial grátis de 3 dias: episódios 1 e 2 de cada série liberados
-- Depois: assinatura R$19,90/mês (hoje simulada/mock; gateway real — Mercado Pago/Stripe — plugável via webhook em lib/billing/)
+- Episódios 1 e 2 de cada série: grátis para todos, sem login
+- Episódio 3+: login obrigatório; assiste quem tem **314 Pass** (R$19,90/mês, tudo liberado) ou desbloqueou o episódio com **314Coins** (30 coins/episódio; pacotes 200 R$9,90 · 500 R$19,90 · 1200 R$39,90)
+- Pagamentos simulados/mock nesta versão; gateway real (Mercado Pago/Stripe) plugável via webhook (lib/billing/ + rotas /api/coins/*)
 - Séries planejadas com 30–40 episódios de 1–2 min
 
 ## Produto (verdades funcionais)

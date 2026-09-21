@@ -1,12 +1,8 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { getProfile, getSubscription, getUser } from "@/lib/data";
-import {
-  isSubscriptionActive,
-  isTrialActive,
-  trialDaysRemaining,
-} from "@/lib/access";
+import { getSubscription, getUser } from "@/lib/data";
+import { isSubscriptionActive } from "@/lib/access";
 import SubscribeButton from "@/components/SubscribeButton";
 import SetupNotice from "@/components/SetupNotice";
 import { CheckIcon } from "@/components/icons";
@@ -14,7 +10,7 @@ import { CheckIcon } from "@/components/icons";
 export const dynamic = "force-dynamic";
 
 const BENEFITS = [
-  "Acesso a todos os episódios de todas as séries",
+  "Todos os episódios liberados, sem gastar coins",
   "Novos episódios e séries toda semana",
   "Player vertical otimizado para o celular",
   "Sem anúncios",
@@ -34,14 +30,8 @@ export default async function SubscribePage() {
   const user = await getUser(supabase);
   if (!user) redirect("/login?next=/assinar");
 
-  const [profile, subscription] = await Promise.all([
-    getProfile(supabase, user.id),
-    getSubscription(supabase, user.id),
-  ]);
-
+  const subscription = await getSubscription(supabase, user.id);
   const active = isSubscriptionActive(subscription);
-  const trial = isTrialActive(profile);
-  const daysLeft = trialDaysRemaining(profile);
 
   return (
     <div className="relative flex min-h-dvh items-center justify-center overflow-hidden px-6 py-16">
@@ -53,9 +43,7 @@ export default async function SubscribePage() {
       </span>
       <div className="relative w-full max-w-xs">
         <h1 className="text-center font-[family-name:var(--font-display)] text-4xl font-semibold uppercase leading-[0.95] tracking-[-0.02em]">
-          Canal314
-          <br />
-          Premium
+          314 Pass
         </h1>
 
         <div className="mt-8 flex items-end justify-center gap-2">
@@ -65,17 +53,10 @@ export default async function SubscribePage() {
           <span className="pb-1.5 text-sm text-white/55">R$/mês</span>
         </div>
 
-        {trial && (
-          <p className="mt-6 border border-white/20 px-4 py-3 text-center text-xs leading-relaxed text-white/70">
-            Seu teste grátis ainda tem {daysLeft}{" "}
-            {daysLeft === 1 ? "dia" : "dias"} — assine agora e libere tudo.
-          </p>
-        )}
-
         <ul className="mt-8 space-y-4 border-t border-white/10 pt-8">
           {BENEFITS.map((b) => (
             <li key={b} className="flex items-start gap-3 text-sm">
-              <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-white" />
+              <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
               <span className="text-white/75">{b}</span>
             </li>
           ))}
@@ -85,7 +66,7 @@ export default async function SubscribePage() {
           {active ? (
             <div className="text-center">
               <p className="border border-white/30 px-4 py-3 text-sm font-semibold">
-                Sua assinatura já está ativa
+                Seu 314 Pass já está ativo
               </p>
               <Link
                 href="/"

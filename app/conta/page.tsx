@@ -2,19 +2,13 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import {
+  getCoinBalance,
   getContinueWatching,
   getMyList,
-  getProfile,
   getSubscription,
   getUser,
 } from "@/lib/data";
-import {
-  formatDuration,
-  isSubscriptionActive,
-  isTrialActive,
-  trialDaysRemaining,
-  trialEndsAt,
-} from "@/lib/access";
+import { formatDuration, isSubscriptionActive } from "@/lib/access";
 import {
   CancelSubscriptionButton,
   LogoutButton,
@@ -22,7 +16,7 @@ import {
 } from "@/components/AccountActions";
 import SetupNotice from "@/components/SetupNotice";
 import { categoryLabel } from "@/components/PosterArt";
-import { PlayIcon } from "@/components/icons";
+import { CoinIcon, PlayIcon } from "@/components/icons";
 
 export const dynamic = "force-dynamic";
 
@@ -39,16 +33,14 @@ export default async function AccountPage() {
   const user = await getUser(supabase);
   if (!user) redirect("/login?next=/conta");
 
-  const [profile, subscription, continueWatching, myList] = await Promise.all([
-    getProfile(supabase, user.id),
+  const [subscription, continueWatching, myList, coinBalance] = await Promise.all([
     getSubscription(supabase, user.id),
     getContinueWatching(supabase, user.id),
     getMyList(supabase, user.id),
+    getCoinBalance(supabase, user.id),
   ]);
 
   const active = isSubscriptionActive(subscription);
-  const trial = isTrialActive(profile);
-  const daysLeft = trialDaysRemaining(profile);
 
   return (
     <div className="mx-auto w-full max-w-xl px-6 pb-16 pt-24">
@@ -57,9 +49,29 @@ export default async function AccountPage() {
       </h1>
       <p className="mt-3 text-sm text-white/55">{user.email}</p>
 
-      {/* Status do plano */}
+      {/* 314Coins */}
       <section className="mt-10 border border-white/15 p-6">
-        <p className="micro-label text-white/50">Seu plano</p>
+        <p className="micro-label text-white/50">314Coins</p>
+        <div className="mt-4 flex items-center gap-3">
+          <CoinIcon className="h-8 w-8 text-accent" />
+          <span className="font-[family-name:var(--font-display)] text-4xl font-semibold leading-none tracking-[-0.02em]">
+            {coinBalance}
+          </span>
+        </div>
+        <p className="mt-2 text-sm text-white/55">
+          Desbloqueie episódios avulsos · 30 coins por episódio
+        </p>
+        <Link
+          href="/coins"
+          className="mt-5 block bg-accent px-6 py-3.5 text-center text-xs font-bold uppercase tracking-[0.14em] text-white transition hover:bg-accent-hover"
+        >
+          Comprar 314Coins
+        </Link>
+      </section>
+
+      {/* 314 Pass */}
+      <section className="mt-6 border border-white/15 p-6">
+        <p className="micro-label text-white/50">314 Pass</p>
         {active ? (
           <div className="mt-4">
             <p className="font-[family-name:var(--font-display)] text-2xl font-semibold uppercase tracking-[-0.02em]">
@@ -76,38 +88,19 @@ export default async function AccountPage() {
               <CancelSubscriptionButton />
             </div>
           </div>
-        ) : trial ? (
-          <div className="mt-4">
-            <p className="font-[family-name:var(--font-display)] text-2xl font-semibold uppercase tracking-[-0.02em]">
-              Teste grátis ativo
-            </p>
-            <p className="mt-2 text-sm text-white/55">
-              Restam {daysLeft} {daysLeft === 1 ? "dia" : "dias"} · episódios 1 e
-              2 de cada série liberados
-            </p>
-            <Link
-              href="/assinar"
-              className="mt-5 block bg-accent px-6 py-3.5 text-center text-xs font-bold uppercase tracking-[0.14em] text-white transition hover:bg-accent-hover"
-            >
-              Assinar agora
-            </Link>
-          </div>
         ) : (
           <div className="mt-4">
             <p className="font-[family-name:var(--font-display)] text-2xl font-semibold uppercase tracking-[-0.02em]">
-              Teste expirado
+              Sem assinatura
             </p>
             <p className="mt-2 text-sm text-white/55">
-              {profile
-                ? `Terminou em ${trialEndsAt(profile).toLocaleDateString("pt-BR")}.`
-                : ""}{" "}
-              Assine para continuar assistindo.
+              Todos os episódios liberados, sem gastar coins · R$19,90/mês
             </p>
             <Link
               href="/assinar"
-              className="mt-5 block bg-accent px-6 py-3.5 text-center text-xs font-bold uppercase tracking-[0.14em] text-white transition hover:bg-accent-hover"
+              className="mt-5 block border border-white/35 px-6 py-3.5 text-center text-xs font-bold uppercase tracking-[0.14em] text-white transition hover:border-accent hover:text-accent"
             >
-              Assinar R$19,90/mês
+              Assinar o 314 Pass
             </Link>
           </div>
         )}

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LogoLink } from "./Logo";
+import { CoinIcon } from "./icons";
 
 const NAV_ITEMS = [
   { href: "/", label: "Início" },
@@ -16,7 +17,13 @@ const NAV_ITEMS = [
  * caem para uma segunda linha da barra; no desktop ficam ao lado da logo.
  * Some na rota /assistir, onde o player tem seu próprio chrome.
  */
-export default function HeaderShell({ loggedIn }: { loggedIn: boolean }) {
+export default function HeaderShell({
+  loggedIn,
+  coinBalance,
+}: {
+  loggedIn: boolean;
+  coinBalance?: number | null;
+}) {
   const pathname = usePathname();
   if (pathname.startsWith("/assistir")) return null;
 
@@ -49,12 +56,22 @@ export default function HeaderShell({ loggedIn }: { loggedIn: boolean }) {
         </nav>
         <nav className="pointer-events-auto order-2 ml-auto flex items-center gap-4 sm:order-3">
           {loggedIn ? (
-            <Link
-              href="/conta"
-              className="micro-label text-white/80 transition hover:text-accent"
-            >
-              Conta
-            </Link>
+            <>
+              <Link
+                href="/coins"
+                aria-label={`Saldo de ${coinBalance ?? 0} 314Coins`}
+                className="flex items-center gap-1.5 border border-white/25 px-3 py-1.5 text-xs font-semibold text-white/85 transition hover:border-accent hover:text-accent"
+              >
+                <CoinIcon className="h-4 w-4 text-accent" />
+                {coinBalance ?? 0}
+              </Link>
+              <Link
+                href="/conta"
+                className="micro-label text-white/80 transition hover:text-accent"
+              >
+                Conta
+              </Link>
+            </>
           ) : (
             <Link
               href="/login"

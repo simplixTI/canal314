@@ -2,10 +2,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { getSeriesBySlug, listEpisodes } from "@/lib/data";
-import { FREE_EPISODES_PER_SERIES, formatDuration } from "@/lib/access";
+import { FREE_EPISODES_PER_SERIES, UNLOCK_COST, formatDuration } from "@/lib/access";
 import PosterArt, { categoryLabel } from "@/components/PosterArt";
 import SetupNotice from "@/components/SetupNotice";
-import { ChevronLeftIcon, LockIcon, PlayIcon } from "@/components/icons";
+import { ChevronLeftIcon, CoinIcon, LockIcon, PlayIcon } from "@/components/icons";
 
 export const dynamic = "force-dynamic";
 
@@ -109,7 +109,13 @@ export default async function SeriesPage({
                           Grátis
                         </span>
                       ) : (
-                        <LockIcon className="h-4 w-4 shrink-0 text-white/40" />
+                        <span className="flex shrink-0 items-center gap-1.5 text-white/40">
+                          <LockIcon className="h-4 w-4" />
+                          <span className="flex items-center gap-1 text-xs font-semibold">
+                            {UNLOCK_COST}
+                            <CoinIcon className="h-3.5 w-3.5 text-accent" />
+                          </span>
+                        </span>
                       )}
                     </span>
                     <span className="mt-1 block text-xs text-white/50">
@@ -123,7 +129,8 @@ export default async function SeriesPage({
           })}
         </ol>
         <p className="mt-5 px-6 text-xs leading-relaxed text-white/45">
-          Episódios 1 e 2 liberados no teste grátis · assine para liberar todos
+          Episódios 1 e 2 grátis para todos · desbloqueie os demais com
+          314Coins ou libere tudo com o 314 Pass
         </p>
       </div>
 

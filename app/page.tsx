@@ -124,11 +124,15 @@ export default async function HomePage() {
               </Link>
               <Link
                 href="/login"
-                className="whitespace-nowrap rounded-full border border-white/40 px-6 py-4 text-sm font-semibold text-white transition hover:border-white"
+                className="whitespace-nowrap rounded-full border border-white/40 px-6 py-4 text-sm font-semibold text-white transition hover:border-accent hover:text-accent"
               >
-                Teste grátis
+                Criar conta grátis
               </Link>
             </div>
+            <p className="mt-5 text-xs text-white/45">
+              Episódios 1 e 2 grátis · desbloqueie com 314Coins · ou assine o
+              314 Pass
+            </p>
           </div>
         </div>
       </div>

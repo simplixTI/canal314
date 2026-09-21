@@ -143,14 +143,21 @@ export async function getContinueWatching(
 
 export async function getEpisodeLikeState(
   supabase: Supabase,
-  userId: string,
+  userId: string | null,
   episodeId: string
 ): Promise<{ liked: boolean; count: number }> {
+  const countQuery = supabase
+    .from("episode_likes")
+    .select("*", { count: "exact", head: true })
+    .eq("episode_id", episodeId);
+
+  if (!userId) {
+    const { count } = await countQuery;
+    return { liked: false, count: count ?? 0 };
+  }
+
   const [{ count }, { data }] = await Promise.all([
-    supabase
-      .from("episode_likes")
-      .select("*", { count: "exact", head: true })
-      .eq("episode_id", episodeId),
+    countQuery,
     supabase
       .from("episode_likes")
       .select("user_id")
@@ -195,4 +202,33 @@ export async function getMyList(
     if (series) items.push(series);
   }
   return items;
+}
+
+// ---------- 314Coins ----------
+
+/** Saldo = soma do ledger do usuário. */
+export async function getCoinBalance(
+  supabase: Supabase,
+  userId: string
+): Promise<number> {
+  const { data } = await supabase
+    .from("coin_transactions")
+    .select("amount")
+    .eq("user_id", userId);
+  if (!data) return 0;
+  return data.reduce((sum: number, row: { amount: number }) => sum + row.amount, 0);
+}
+
+export async function getEpisodeUnlock(
+  supabase: Supabase,
+  userId: string,
+  episodeId: string
+): Promise<boolean> {
+  const { data } = await supabase
+    .from("episode_unlocks")
+    .select("user_id")
+    .eq("episode_id", episodeId)
+    .eq("user_id", userId)
+    .maybeSingle();
+  return Boolean(data);
 }

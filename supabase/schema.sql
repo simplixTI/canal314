@@ -202,3 +202,53 @@ drop policy if exists "list_entries_delete_own" on public.list_entries;
 create policy "list_entries_delete_own"
   on public.list_entries for delete
   using (auth.uid() = user_id);
+
+-- ============================================================
+-- 314Coins (2026-09): ledger de moedas + episódios desbloqueados
+-- ============================================================
+
+-- coin_transactions: ledger de 314Coins do usuário
+-- amount > 0 = compra (kind='purchase'); amount < 0 = gasto (kind='unlock')
+create table if not exists public.coin_transactions (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references public.profiles (id) on delete cascade,
+  amount int not null,
+  kind text not null check (kind in ('purchase', 'unlock')),
+  episode_id uuid references public.episodes (id) on delete set null,
+  pack_id text,
+  created_at timestamptz not null default now()
+);
+
+-- episode_unlocks: episódio avulso desbloqueado com coins
+create table if not exists public.episode_unlocks (
+  user_id uuid not null references public.profiles (id) on delete cascade,
+  episode_id uuid not null references public.episodes (id) on delete cascade,
+  coins_spent int not null,
+  created_at timestamptz not null default now(),
+  primary key (user_id, episode_id)
+);
+
+alter table public.coin_transactions enable row level security;
+alter table public.episode_unlocks enable row level security;
+
+-- coin_transactions: usuário lê e insere apenas as próprias linhas
+drop policy if exists "coin_transactions_select_own" on public.coin_transactions;
+create policy "coin_transactions_select_own"
+  on public.coin_transactions for select
+  using (auth.uid() = user_id);
+
+drop policy if exists "coin_transactions_insert_own" on public.coin_transactions;
+create policy "coin_transactions_insert_own"
+  on public.coin_transactions for insert
+  with check (auth.uid() = user_id);
+
+-- episode_unlocks: usuário lê e insere apenas as próprias linhas
+drop policy if exists "episode_unlocks_select_own" on public.episode_unlocks;
+create policy "episode_unlocks_select_own"
+  on public.episode_unlocks for select
+  using (auth.uid() = user_id);
+
+drop policy if exists "episode_unlocks_insert_own" on public.episode_unlocks;
+create policy "episode_unlocks_insert_own"
+  on public.episode_unlocks for insert
+  with check (auth.uid() = user_id);

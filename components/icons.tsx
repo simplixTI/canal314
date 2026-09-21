@@ -119,3 +119,23 @@ export function XIcon(props: IconProps) {
     </svg>
   );
 }
+
+export function CoinIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <circle cx="12" cy="12" r="8.5" />
+      <text
+        x="12"
+        y="15.6"
+        textAnchor="middle"
+        fontSize="8.5"
+        fontWeight="700"
+        fill="currentColor"
+        stroke="none"
+        fontFamily="inherit"
+      >
+        314
+      </text>
+    </svg>
+  );
+}
