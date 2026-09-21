@@ -8,7 +8,7 @@ import type {
   Subscription,
 } from "./types";
 
-type Supabase = NonNullable<ReturnType<typeof createClient>>;
+type Supabase = NonNullable<Awaited<ReturnType<typeof createClient>>>;
 
 export async function getUser(supabase: Supabase) {
   const {

@@ -7,10 +7,10 @@ import { SUPABASE_ANON_KEY, SUPABASE_URL, isSupabaseConfigured } from "./config"
  * Retorna null quando as variáveis de ambiente não estão configuradas,
  * permitindo que o app renderize um estado de "setup pendente".
  */
-export function createClient() {
+export async function createClient() {
   if (!isSupabaseConfigured()) return null;
 
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
 
   return createServerClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
     cookies: {

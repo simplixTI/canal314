@@ -4,7 +4,7 @@ import { getUser } from "@/lib/data";
 import { LogoLink } from "./Logo";
 
 export default async function Header() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const user = supabase ? await getUser(supabase) : null;
 
   return (

@@ -28,9 +28,10 @@ function LockIcon() {
 export default async function SeriesPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const supabase = createClient();
+  const { slug } = await params;
+  const supabase = await createClient();
   if (!supabase) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-10">
@@ -39,7 +40,7 @@ export default async function SeriesPage({
     );
   }
 
-  const series = await getSeriesBySlug(supabase, params.slug);
+  const series = await getSeriesBySlug(supabase, slug);
   if (!series) notFound();
 
   const episodes = await listEpisodes(supabase, series.id);

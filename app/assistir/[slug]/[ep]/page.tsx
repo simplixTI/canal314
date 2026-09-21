@@ -18,9 +18,10 @@ export const dynamic = "force-dynamic";
 export default async function WatchPage({
   params,
 }: {
-  params: { slug: string; ep: string };
+  params: Promise<{ slug: string; ep: string }>;
 }) {
-  const supabase = createClient();
+  const { slug, ep } = await params;
+  const supabase = await createClient();
   if (!supabase) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-10">
@@ -29,10 +30,10 @@ export default async function WatchPage({
     );
   }
 
-  const episodeNumber = Number(params.ep);
+  const episodeNumber = Number(ep);
   if (!Number.isInteger(episodeNumber) || episodeNumber < 1) notFound();
 
-  const series = await getSeriesBySlug(supabase, params.slug);
+  const series = await getSeriesBySlug(supabase, slug);
   if (!series) notFound();
 
   const episode = await getEpisode(supabase, series.id, episodeNumber);
@@ -41,7 +42,7 @@ export default async function WatchPage({
   // ---- Verificação de acesso (server-side) ----
   const user = await getUser(supabase);
   if (!user) {
-    redirect(`/login?next=/assistir/${params.slug}/${episodeNumber}`);
+    redirect(`/login?next=/assistir/${slug}/${episodeNumber}`);
   }
 
   const [profile, subscription] = await Promise.all([

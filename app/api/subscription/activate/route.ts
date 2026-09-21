@@ -5,7 +5,7 @@ import { getBillingProvider } from "@/lib/billing";
 export const dynamic = "force-dynamic";
 
 export async function POST() {
-  const supabase = createClient();
+  const supabase = await createClient();
   if (!supabase) {
     return NextResponse.json(
       { error: "Supabase não configurado." },

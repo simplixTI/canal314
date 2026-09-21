@@ -8,7 +8,7 @@ import Logo from "@/components/Logo";
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const series = supabase ? await listSeries(supabase) : [];
 
   return (
