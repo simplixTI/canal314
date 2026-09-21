@@ -20,12 +20,20 @@ values
     1
   ),
   (
+    'juscelino-kubitschek',
+    'Juscelino Kubitschek',
+    'A visão de levar o centro do poder para o coração do Brasil: do sonho de uma nova capital à construção de Brasília.',
+    'politico',
+    '/thumbnails/juscelino-kubitschek.png',
+    2
+  ),
+  (
     'getulio-vargas',
     'Getúlio Vargas',
     'A trajetória do "pai dos pobres": da Revolução de 1930 ao Estado Novo, as leis trabalhistas e o legado que dividiu o Brasil.',
     'politico',
     null,
-    2
+    3
   ),
   (
     'padre-cicero',
@@ -33,7 +41,7 @@ values
     'A história do padim do sertão: fé, milagres e poder no Juazeiro do Norte do século XIX.',
     'religioso',
     null,
-    3
+    4
   ),
   (
     'chico-xavier',
@@ -41,7 +49,7 @@ values
     'A vida do maior médium do Brasil: a psicografia, a humildade de Pedro Leopoldo e a doutrina que consolou milhões.',
     'religioso',
     null,
-    4
+    5
   )
 on conflict (slug) do nothing;
 
@@ -57,7 +65,7 @@ values
     'Do funcionário público ao fundador da Universal: a construção de um império evangélico e a entrada da igreja na política brasileira.',
     'religioso',
     null,
-    5
+    6
   ),
   (
     'lula',
@@ -65,7 +73,7 @@ values
     'Do torno mecânico ao Planalto: a trajetória do metalúrgico que mudou a política brasileira — idas, vindas e o retorno.',
     'politico',
     null,
-    6
+    7
   ),
   (
     'irma-dulce',
@@ -73,7 +81,7 @@ values
     'O anjo bom da Bahia: a vida da primeira santa brasileira dedicada aos mais pobres de Salvador.',
     'religioso',
     null,
-    7
+    8
   ),
   (
     'jair-bolsonaro',
@@ -81,7 +89,7 @@ values
     'Do quartel ao Planalto: o capitão que polarizou o Brasil e redefiniu a direita no país.',
     'politico',
     null,
-    8
+    9
   ),
   (
     'silas-malafaia',
@@ -89,7 +97,7 @@ values
     'O pastor que virou comentarista político: púlpito, televisão e a nova direita evangélica.',
     'religioso',
     null,
-    9
+    10
   ),
   (
     'tancredo-neves',
@@ -97,7 +105,7 @@ values
     'O presidente que não tomou posse: a luta pelas Diretas e a redemocratização do Brasil.',
     'politico',
     null,
-    10
+    11
   ),
   (
     'divaldo-franco',
@@ -105,7 +113,7 @@ values
     'O médium educador: a Mansão do Caminho e uma vida dedicada à psicografia e à infância abandonada.',
     'religioso',
     null,
-    11
+    12
   ),
   (
     'dom-helder-camara',
@@ -113,7 +121,7 @@ values
     'O bispo dos pobres: coragem profética contra a ditadura e a voz da não-violência no Recife.',
     'politico',
     null,
-    12
+    13
   )
 on conflict (slug) do nothing;
 
