@@ -11,6 +11,8 @@ const NAV_ITEMS = [
   { href: "/podcast", label: "PodCast" },
 ] as const;
 
+const ZAP_DA_FE_URL = "https://zapdafe.com.br/mensagem";
+
 /**
  * Chrome mínimo sobre o conteúdo: logo + seções à esquerda, conta à direita.
  * Item ativo em laranja (como o item ativo do ReelShort). No mobile as seções
@@ -53,6 +55,14 @@ export default function HeaderShell({
               </Link>
             );
           })}
+          <a
+            href={ZAP_DA_FE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="micro-label tracking-[0.14em] text-white/70 transition hover:text-accent sm:tracking-[0.22em]"
+          >
+            Zap da Fé
+          </a>
         </nav>
         <nav className="pointer-events-auto order-2 ml-auto flex items-center gap-4 sm:order-3">
           {loggedIn ? (
