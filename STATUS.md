@@ -28,7 +28,7 @@
 - Estilo: streaming clássico (referência reelshort.com/pt) — hero do carro-chefe + fileiras horizontais; player vertical imersivo
 - Cor: preto `#0a0a0a` + branco + **laranja `#FF6A00`** (token `--accent`; laranja = ação/destaque) + **fotos em COR natural** (2026-09: o site saiu do monocromático forçado — pôsteres fotográficos reais coloridos, grade documental suave; figuras históricas mantêm o tom original do registro)
 - Tipografia: Oswald (títulos) + Inter (corpo), self-hosted via next/font
-- Logo: ícone dourado (sem `invert` — a arte já é para tema escuro), recortado na marca e servido em `public/logo.png` (94 KB, era 1,1 MB): header 54px, login 78px. Master em `assets/logo-master.png`; ícones (`app/icon.png`, `apple-icon.png`, `favicon.ico` 32→256) saem de `python scripts/generate-icons.py`
+- Logo: marca dourada horizontal (sem `invert` — a arte já é para tema escuro), aparada na marca e servida em `public/logo.webp` (63 KB): header e rodapé 54px de altura (172px de largura), login 78px. Masters em `assets/` (horizontal para a tela, quadrada para os ícones); `app/icon.png`, `apple-icon.png` e `favicon.ico` (32→256) saem de `python scripts/generate-icons.py`
 - Detalhes: DESIGN.md (sistema completo), PRODUCT.md (verdades do produto), `.impeccable/surfaces/` (contratos)
 
 ## Feito ✅
@@ -46,6 +46,7 @@
 - [x] 314 Pass: página `/assinar` rebrandeada, assinatura mock (ativa 30 dias) — pronta para webhook de gateway
 - [x] Conta: saldo coins, status do passe, Minha Lista, continuar assistindo, logout
 - [x] Nav: Início · Categorias (âncora) · PodCast · Zap da Fé (externo, nova aba → zapdafe.com.br/mensagem)
+- [x] **Header mobile padrão ReelShort (2026-09)**: hambúrguer + logo centrada + busca/avatar, abas com underline laranja na ativa; drawer lateral real (seções, 314Coins, 314 Pass, legais, Sair); busca real por título (ilike Supabase, debounce, overlay full-screen). Desktop ≥ lg inalterado
 - [x] PodCast: página com episódio do YouTube incorporado (ID XrhcJl8tf5w)
 - [x] Rodapé em todas as telas menos o player: marca + copyright + redes, colunas Canal/Assistir/Sobre, barra "314 no detalhe"
 - [x] Páginas institucionais `/termos`, `/privacidade`, `/contato` — texto base **sem revisão jurídica**
@@ -71,7 +72,7 @@
 - [ ] **IDs reais do YouTube** dos episódios (hoje todos usam placeholder `dQw4w9WgXcQ`) — passar série + nº do ep + ID; atualizar via SQL Editor (snippet no README)
 - [ ] **Vídeo do PodCast está PRIVADO** — mudar para "Não listado" no YouTube Studio, senão ninguém assiste
 - [ ] Confirmação de e-mail do Supabase está LIGADA — avaliar desligar em Authentication → Providers → Email (facilita cadastro)
-- [ ] Arquivo `public/logo_.png` (marca preta horizontal antiga) continua sem uso — confirmar se pode apagar
+- [ ] Sobraram em `public/` duas artes sem uso — `logo_.png` (marca preta antiga) e `logo_2.png` (badge quadrado do logo anterior): confirmar se podem ser apagadas
 
 ### Produto / técnica
 - [ ] Gateway de pagamento REAL (Mercado Pago recomendado: Pix + recorrência) — plugar nos pacotes de coins e no 314 Pass via webhook (`lib/billing/` isolado para isso)

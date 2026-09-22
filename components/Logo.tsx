@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 /**
- * Marca raster — placa dourada horizontal (~2.9:1) sobre preto, feita para o
+ * Marca raster — marca dourada horizontal (~3.2:1) sobre preto, feita para o
  * tema escuro (NÃO usar filtro invert). O arquivo já vem recortado na arte
  * (sem a margem transparente da master), então a altura da caixa é a altura
  * da marca. sm = header e rodapé, lg = login.
@@ -21,7 +21,7 @@ export default function Logo({ size = "sm" }: { size?: keyof typeof sizes }) {
     <img
       src="/logo.webp"
       alt="Canal314"
-      width={843}
+      width={916}
       height={288}
       className={`${sizes[size]} w-auto`}
     />

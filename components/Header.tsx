@@ -7,5 +7,12 @@ export default async function Header() {
   const user = supabase ? await getUser(supabase) : null;
   const coinBalance =
     supabase && user ? await getCoinBalance(supabase, user.id) : null;
-  return <HeaderShell loggedIn={Boolean(user)} coinBalance={coinBalance} />;
+  const userInitial = user?.email?.charAt(0).toUpperCase() ?? null;
+  return (
+    <HeaderShell
+      loggedIn={Boolean(user)}
+      coinBalance={coinBalance}
+      userInitial={userInitial}
+    />
+  );
 }

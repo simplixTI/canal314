@@ -140,6 +140,33 @@ export function CoinIcon(props: IconProps) {
   );
 }
 
+export function MenuIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M4 7h16M4 12h16M4 17h16" />
+    </svg>
+  );
+}
+
+export function SearchIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <circle cx="11" cy="11" r="6.5" />
+      <path d="m16 16 4.5 4.5" />
+    </svg>
+  );
+}
+
+export function UserCircleIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <circle cx="12" cy="12" r="8.5" />
+      <circle cx="12" cy="9.25" r="2.75" />
+      <path d="M6.5 18.25a5.75 5.75 0 0 1 11 0" />
+    </svg>
+  );
+}
+
 /* ---------- Redes sociais ----------
    Traçadas no mesmo traço da casa (stroke 1.5) em vez dos glifos oficiais
    sólidos: no footer elas convivem com os ícones autorais acima. */
