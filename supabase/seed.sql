@@ -32,7 +32,7 @@ values
     'Getúlio Vargas',
     'A trajetória do "pai dos pobres": da Revolução de 1930 ao Estado Novo, as leis trabalhistas e o legado que dividiu o Brasil.',
     'politico',
-    null,
+    '/thumbnails/getulio-vargas.jpg',
     3
   ),
   (
@@ -40,7 +40,7 @@ values
     'Padre Cícero',
     'A história do padim do sertão: fé, milagres e poder no Juazeiro do Norte do século XIX.',
     'religioso',
-    null,
+    '/thumbnails/padre-cicero.jpg',
     4
   ),
   (
@@ -48,7 +48,7 @@ values
     'Chico Xavier',
     'A vida do maior médium do Brasil: a psicografia, a humildade de Pedro Leopoldo e a doutrina que consolou milhões.',
     'religioso',
-    null,
+    '/thumbnails/chico-xavier.jpg',
     5
   )
 on conflict (slug) do nothing;
@@ -64,7 +64,7 @@ values
     'Edir Macedo',
     'Do funcionário público ao fundador da Universal: a construção de um império evangélico e a entrada da igreja na política brasileira.',
     'religioso',
-    null,
+    '/thumbnails/edir-macedo.jpg',
     6
   ),
   (
@@ -72,7 +72,7 @@ values
     'Lula',
     'Do torno mecânico ao Planalto: a trajetória do metalúrgico que mudou a política brasileira — idas, vindas e o retorno.',
     'politico',
-    null,
+    '/thumbnails/lula.jpg',
     7
   ),
   (
@@ -80,7 +80,7 @@ values
     'Irmã Dulce',
     'O anjo bom da Bahia: a vida da primeira santa brasileira dedicada aos mais pobres de Salvador.',
     'religioso',
-    null,
+    '/thumbnails/irma-dulce.jpg',
     8
   ),
   (
@@ -88,7 +88,7 @@ values
     'Jair Bolsonaro',
     'Do quartel ao Planalto: o capitão que polarizou o Brasil e redefiniu a direita no país.',
     'politico',
-    null,
+    '/thumbnails/jair-bolsonaro.jpg',
     9
   ),
   (
@@ -96,7 +96,7 @@ values
     'Silas Malafaia',
     'O pastor que virou comentarista político: púlpito, televisão e a nova direita evangélica.',
     'religioso',
-    null,
+    '/thumbnails/silas-malafaia.jpg',
     10
   ),
   (
@@ -104,7 +104,7 @@ values
     'Tancredo Neves',
     'O presidente que não tomou posse: a luta pelas Diretas e a redemocratização do Brasil.',
     'politico',
-    null,
+    '/thumbnails/tancredo-neves.jpg',
     11
   ),
   (
@@ -112,7 +112,7 @@ values
     'Divaldo Franco',
     'O médium educador: a Mansão do Caminho e uma vida dedicada à psicografia e à infância abandonada.',
     'religioso',
-    null,
+    '/thumbnails/divaldo-franco.jpg',
     12
   ),
   (
@@ -120,7 +120,7 @@ values
     'Dom Hélder Câmara',
     'O bispo dos pobres: coragem profética contra a ditadura e a voz da não-violência no Recife.',
     'politico',
-    null,
+    '/thumbnails/dom-helder-camara.jpg',
     13
   )
 on conflict (slug) do nothing;

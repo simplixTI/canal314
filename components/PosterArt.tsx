@@ -240,7 +240,7 @@ export default function PosterArt({
           fill
           priority={priority}
           sizes={size === "thumb" ? "256px" : "100vw"}
-          className="object-cover object-[50%_15%] brightness-[0.92] grayscale contrast-[1.05]"
+          className="object-cover object-[50%_15%] brightness-[0.95]"
         />
         <div aria-hidden className="scrim-vignette absolute inset-0" />
         <Grain opacity={0.07} />

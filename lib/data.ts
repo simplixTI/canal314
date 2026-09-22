@@ -1,4 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import type {
   ContinueWatchingItem,
   Episode,
@@ -9,6 +11,17 @@ import type {
 } from "./types";
 
 type Supabase = NonNullable<Awaited<ReturnType<typeof createClient>>>;
+
+/**
+ * Fallback de pôster por convenção de slug: se a série não tem thumbnail
+ * no banco e existe public/thumbnails/<slug>.jpg (pôster composto),
+ * usa o arquivo local — sem precisar mexer no banco.
+ */
+function withLocalPoster<T extends { slug: string; thumbnail: string }>(s: T): T {
+  if (s.thumbnail) return s;
+  const file = join(process.cwd(), "public", "thumbnails", `${s.slug}.jpg`);
+  return existsSync(file) ? { ...s, thumbnail: `/thumbnails/${s.slug}.jpg` } : s;
+}
 
 export async function getUser(supabase: Supabase) {
   const {
@@ -58,10 +71,12 @@ export async function listSeries(supabase: Supabase): Promise<SeriesWithCount[]>
     counts.set(ep.series_id, (counts.get(ep.series_id) ?? 0) + 1);
   });
 
-  return (series as Series[]).map((s) => ({
-    ...s,
-    episode_count: counts.get(s.id) ?? 0,
-  }));
+  return (series as Series[]).map((s) =>
+    withLocalPoster({
+      ...s,
+      episode_count: counts.get(s.id) ?? 0,
+    })
+  );
 }
 
 export async function getSeriesBySlug(
@@ -73,7 +88,7 @@ export async function getSeriesBySlug(
     .select("*")
     .eq("slug", slug)
     .maybeSingle();
-  return data;
+  return data ? withLocalPoster(data) : null;
 }
 
 export async function listEpisodes(

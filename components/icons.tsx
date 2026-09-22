@@ -139,3 +139,35 @@ export function CoinIcon(props: IconProps) {
     </svg>
   );
 }
+
+/* ---------- Redes sociais ----------
+   Traçadas no mesmo traço da casa (stroke 1.5) em vez dos glifos oficiais
+   sólidos: no footer elas convivem com os ícones autorais acima. */
+
+export function YouTubeIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <rect x="2.5" y="5.5" width="19" height="13" rx="4" />
+      <path d="M10.2 9.4v5.2l4.6-2.6-4.6-2.6Z" />
+    </svg>
+  );
+}
+
+export function InstagramIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
+      <circle cx="12" cy="12" r="3.9" />
+      <path d="M16.9 7.1h.01" strokeWidth="2" />
+    </svg>
+  );
+}
+
+export function TikTokIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M13.9 3.4v10.4a3.6 3.6 0 1 1-3.6-3.6c.35 0 .69.05 1 .15" />
+      <path d="M13.9 3.4c.32 2.3 1.93 3.86 4.3 4.03" />
+    </svg>
+  );
+}

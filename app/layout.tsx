@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Oswald, Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const display = Oswald({
   subsets: ["latin"],
@@ -38,6 +39,7 @@ export default function RootLayout({
         <div className="relative min-h-dvh w-full">
           <Header />
           {children}
+          <Footer />
           {/* Grão de filme sobre o app inteiro */}
           <div
             aria-hidden

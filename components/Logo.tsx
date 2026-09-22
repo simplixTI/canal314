@@ -1,10 +1,14 @@
 import Link from "next/link";
 
 /**
- * Marca raster — ícone dourado sobre preto, feito para o tema escuro
- * (NÃO usar filtro invert). O arquivo já vem recortado na arte (sem a margem
- * transparente do master), então a altura da caixa é a altura da marca.
- * sm = header, lg = login. Regerar com `python scripts/generate-icons.py`.
+ * Marca raster — placa dourada horizontal (~2.9:1) sobre preto, feita para o
+ * tema escuro (NÃO usar filtro invert). O arquivo já vem recortado na arte
+ * (sem a margem transparente da master), então a altura da caixa é a altura
+ * da marca. sm = header e rodapé, lg = login.
+ *
+ * Regerar com `python scripts/generate-icons.py` — se trocar a arte, conferir
+ * `width`/`height` abaixo: são a proporção real do arquivo, e é o que segura
+ * o layout enquanto a imagem carrega.
  */
 const sizes = {
   sm: "h-[54px]",
@@ -15,9 +19,9 @@ export default function Logo({ size = "sm" }: { size?: keyof typeof sizes }) {
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src="/logo.png"
+      src="/logo.webp"
       alt="Canal314"
-      width={301}
+      width={843}
       height={288}
       className={`${sizes[size]} w-auto`}
     />
