@@ -1,0 +1,21 @@
+# Config remota do projeto Supabase gerida pela CLI (`npx supabase config push`).
+#
+# ATENÇÃO: sem terminal interativo o push APLICA sem perguntar, e todo campo que
+# não estiver declarado aqui volta ao default da CLI. Por isso os blocos [auth.mfa.totp]
+# e os campos max_frequency/otp_length repetem o que o painel já tinha: no primeiro
+# push (2026-09-25) eles foram resetados por não estarem declarados.
+project_id = "taawisexhlnvuqzybvxq"
+
+[auth]
+site_url = "https://canal314.vercel.app"
+additional_redirect_urls = ["https://canal314.vercel.app/**", "http://localhost:3000/**"]
+
+[auth.mfa.totp]
+enroll_enabled = true
+verify_enabled = true
+
+[auth.email]
+# O e-mail de cadastro sai pela Resend (lib/email.ts); o Supabase não envia nada.
+enable_confirmations = false
+max_frequency = "1m0s"
+otp_length = 8

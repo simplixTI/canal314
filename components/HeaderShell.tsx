@@ -4,10 +4,9 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LogoLink } from "./Logo";
-import MobileDrawer from "./MobileDrawer";
 import SearchOverlay from "./SearchOverlay";
 import { useScrolled } from "./useScrolled";
-import { CoinIcon, MenuIcon, SearchIcon, UserCircleIcon } from "./icons";
+import { CoinIcon, SearchIcon, UserCircleIcon } from "./icons";
 
 const NAV_ITEMS = [
   { href: "/", label: "Início" },
@@ -25,9 +24,9 @@ function isActive(pathname: string, href: string): boolean {
 
 /**
  * Header por breakpoint:
- * - < lg (mobile): padrão ReelShort — hambúrguer (drawer), logo centrada,
- *   busca real + avatar à direita; abas na segunda linha com underline
- *   laranja na ativa.
+ * - < lg (mobile): logo centrada, busca real + avatar à direita; abas na
+ *   segunda linha com underline laranja na ativa. Sem drawer lateral: as
+ *   abas já são o menu (decisão do dono, 2026-09-25).
  * - >= lg (desktop): logo + nav inline + Entrar/Conta/coin chip (inalterado).
  * Em ambos, parado no topo o header flutua sobre o hero com o degradê
  * cinematográfico; rolou a página, vira uma barra de vidro fosco cinza
@@ -44,7 +43,6 @@ export default function HeaderShell({
   userInitial?: string | null;
 }) {
   const pathname = usePathname();
-  const [drawerOpen, setDrawerOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const scrolled = useScrolled();
 
@@ -125,15 +123,8 @@ export default function HeaderShell({
       >
         {!scrolled && <div className="scrim-top absolute inset-0 h-28" aria-hidden />}
 
-        {/* Linha 1: hambúrguer · logo centrada · busca + avatar */}
-        <div className="relative flex items-center justify-between px-4 py-3">
-          <button
-            onClick={() => setDrawerOpen(true)}
-            aria-label="Abrir menu"
-            className="pointer-events-auto flex h-10 w-10 items-center justify-center text-white/85 transition hover:text-white"
-          >
-            <MenuIcon className="h-6 w-6" />
-          </button>
+        {/* Linha 1: logo centrada · busca + avatar à direita */}
+        <div className="relative flex items-center justify-end px-4 py-3">
           <span className="pointer-events-auto absolute left-1/2 -translate-x-1/2">
             <LogoLink />
           </span>
@@ -198,12 +189,6 @@ export default function HeaderShell({
         </nav>
       </header>
 
-      <MobileDrawer
-        open={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
-        loggedIn={loggedIn}
-        coinBalance={coinBalance}
-      />
       <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
     </>
   );

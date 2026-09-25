@@ -46,6 +46,8 @@
 - [x] 314Coins: saldo no header, página `/coins` com 3 pacotes (mock), ledger em `coin_transactions`
 - [x] 314 Pass: página `/assinar` rebrandeada, assinatura mock (ativa 30 dias) — pronta para webhook de gateway
 - [x] Conta: saldo coins, status do passe, Minha Lista, continuar assistindo, logout
+- [x] Supabase Auth configurado pela CLI (`supabase/config.toml` + `supabase config push`, 2026-09-25): Site URL `https://canal314.vercel.app`, Redirect URLs, **Confirm email OFF** — o Supabase não manda e-mail nenhum
+- [x] Header mobile sem drawer lateral: as abas fixas já são o menu (2026-09-25)
 - [x] E-mail de cadastro pela Resend (`POST /api/email/cadastro`, disparado pelo LoginForm logo após o signUp; destinatário vem da sessão, só nos 10 primeiros minutos da conta). Modelo em `lib/email-templates.ts`, envio em `lib/email.ts`
 - [x] Nav: Início · Categorias (âncora) · PodCast · Zap da Fé (externo, nova aba → zapdafe.com.br/mensagem)
 - [x] **Header mobile padrão ReelShort (2026-09)**: hambúrguer + logo centrada + busca/avatar, abas com underline laranja na ativa; drawer lateral real (seções, 314Coins, 314 Pass, legais, Sair); busca real por título (ilike Supabase, debounce, overlay full-screen). Desktop ≥ lg inalterado
@@ -70,7 +72,6 @@
 ## Pendências ⏳
 
 ### Bloqueadas (precisam de você)
-- [ ] **Supabase Auth (painel)**: Authentication → Providers → Email → **Confirm email: OFF** (o e-mail de cadastro sai pela Resend, não pelo Supabase); Authentication → URL Configuration → **Site URL** = `https://canal314.vercel.app` e Redirect URLs `https://canal314.vercel.app/**` — hoje está em localhost e todo link de auth (reset de senha, Google) cai lá
 - [ ] **Resend**: confirmar que `canal314.com.br` está verificado (DKIM/SPF) — a chave é restrita a envio e não deixa consultar; `node scripts/email-test.mjs voce@exemplo.com` responde na hora
 - [ ] **Dados públicos em `lib/site.ts` são PALPITE** — e-mail `contato@canal314.com.br` (domínio ainda não existe) e os @ de YouTube/Instagram/TikTok. O rodapé e `/contato` apontam para lá; corrigir o arquivo conserta o site inteiro
 - [ ] **Termos e Privacidade precisam de revisão de advogado** antes de valer como contrato (o texto descreve o produto real, mas foi escrito por IA)
@@ -88,7 +89,9 @@
 
 ## Operação (cola rápida)
 
-**Rodar SQL no banco**: SQL Editor do Supabase (o CLI perdeu privilégio no projeto — 403; não usar `supabase db query`).
+**Rodar SQL no banco**: SQL Editor do Supabase (a CLI está logada e linkada de novo desde 2026-09-25; `supabase db query` pede a senha do banco).
+
+**Mudar config de Auth**: editar `supabase/config.toml` e `npx supabase config push`. Cuidado: sem terminal ele aplica sem perguntar, e campo não declarado volta ao default da CLI — declare também o que quer MANTER.
 
 **Trocar vídeo de um episódio**:
 ```sql
