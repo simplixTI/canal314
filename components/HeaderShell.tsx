@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { LogoLink } from "./Logo";
 import MobileDrawer from "./MobileDrawer";
 import SearchOverlay from "./SearchOverlay";
+import { useScrolled } from "./useScrolled";
 import { CoinIcon, MenuIcon, SearchIcon, UserCircleIcon } from "./icons";
 
 const NAV_ITEMS = [
@@ -28,6 +29,9 @@ function isActive(pathname: string, href: string): boolean {
  *   busca real + avatar à direita; abas na segunda linha com underline
  *   laranja na ativa.
  * - >= lg (desktop): logo + nav inline + Entrar/Conta/coin chip (inalterado).
+ * Em ambos, parado no topo o header flutua sobre o hero com o degradê
+ * cinematográfico; rolou a página, vira uma barra de vidro fosco cinza
+ * (`bg-[#202020]/85` + blur) — senão as abas somem em cima das fotos.
  * Some na rota /assistir, onde o player tem seu próprio chrome.
  */
 export default function HeaderShell({
@@ -42,14 +46,22 @@ export default function HeaderShell({
   const pathname = usePathname();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const scrolled = useScrolled();
 
   if (pathname.startsWith("/assistir")) return null;
+
+  // Traje do header: degradê no topo, barra fosca com conteúdo por baixo.
+  const barra = scrolled
+    ? "bg-[#202020]/85 backdrop-blur-md border-b border-white/10"
+    : "border-b border-transparent";
 
   return (
     <>
       {/* ===================== Desktop (>= lg) — inalterado ===================== */}
-      <header className="pointer-events-none fixed inset-x-0 top-0 z-50 hidden w-full lg:block">
-        <div className="scrim-top absolute inset-0 h-24" aria-hidden />
+      <header
+        className={`pointer-events-none fixed inset-x-0 top-0 z-50 hidden w-full transition-colors duration-300 lg:block ${barra}`}
+      >
+        {!scrolled && <div className="scrim-top absolute inset-0 h-24" aria-hidden />}
         <div className="relative flex items-center px-5 py-4">
           <span className="pointer-events-auto">
             <LogoLink />
@@ -108,8 +120,10 @@ export default function HeaderShell({
       </header>
 
       {/* ===================== Mobile (< lg) — padrão ReelShort ===================== */}
-      <header className="pointer-events-none fixed inset-x-0 top-0 z-50 w-full lg:hidden">
-        <div className="scrim-top absolute inset-0 h-28" aria-hidden />
+      <header
+        className={`pointer-events-none fixed inset-x-0 top-0 z-50 w-full transition-colors duration-300 lg:hidden ${barra}`}
+      >
+        {!scrolled && <div className="scrim-top absolute inset-0 h-28" aria-hidden />}
 
         {/* Linha 1: hambúrguer · logo centrada · busca + avatar */}
         <div className="relative flex items-center justify-between px-4 py-3">

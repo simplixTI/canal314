@@ -39,7 +39,7 @@
 - [x] Cards das fileiras expandem no hover (desktop): título, descrição, Reproduzir/Lista/Enviar — mobile sem hover, toque navega
 - [x] Página da série: abertura cinematográfica, teaser no topo da lista, chip "Grátis" eps 1–2, cadeado + custo em coins nos 3+
 - [x] Player de episódio: vertical fullscreen (9:16 centralizado no desktop), chrome mínimo, anterior/próximo
-- [x] Player de teaser: MP4 próprio fullscreen, grátis sem login, para o áudio ao sair da página (fix de ghost audio)
+- [x] Player de teaser: MP4 próprio fullscreen, grátis sem login, para o áudio ao sair da página (fix de ghost audio). Entra **mudo e tocando** (decisão de 2026-09-24: som automático assusta) com botão "Ativar som" em laranja no canto superior direito
 - [x] Ações do player: Curtir (laranja + contagem), Lista, Enviar (share/clipboard) — no teaser a curtida vale para a série
 - [x] Paywall por variante: anônimo (criar conta) / saldo suficiente (desbloquear 30 coins) / saldo insuficiente (comprar coins) + alternativa 314 Pass
 - [x] 314Coins: saldo no header, página `/coins` com 3 pacotes (mock), ledger em `coin_transactions`
@@ -56,7 +56,8 @@
 - [x] Séries reais: Pastor Everaldo Dias (carro-chefe, capa própria), Getúlio Vargas, Padre Cícero, Chico Xavier, Juscelino Kubitschek (capa própria), Augusto Cury (capa própria, categoria político)
 - [x] **Pôsteres fotográficos reais (coloridos) para as 11 séries sem capa** (2026-09): retratos da Wikimedia Commons/Wikipedia, compostos em 720×1280 (crop 9:16, grade documental suave, scrim, título Oswald + micro-label "314 NO DETALHE" + regra laranja) em `public/thumbnails/<slug>.jpg`; proveniência em `public/thumbnails/ATTRIBUTION.md`. PosterArt cai no arquivo por convenção de slug quando `series.thumbnail` está vazio (sem SQL) e NÃO força mais grayscale — o site agora é colorido; figuras históricas mantêm o tom P&B/sépia do registro original
 - [x] Séries "Em breve" (não clicáveis sem episódios nem teaser): Edir Macedo, Irmã Dulce, Silas Malafaia, Divaldo Franco, Lula, Jair Bolsonaro, Tancredo Neves, Dom Hélder Câmara — todas com pôster fotográfico próprio
-- [x] Teasers no ar: Augusto Cury (1:17) e Juscelino Kubitschek (2:13) — em `public/teasers/`
+- [x] Teasers no ar: Pastor Everaldo Dias (0:30), Augusto Cury (1:17) e Juscelino Kubitschek (2:13) — em `public/teasers/`
+- [x] Hero da home leva ao teaser quando a série tem um (o carro-chefe abre no teaser, não no episódio 1 com YouTube placeholder)
 
 ### Banco (Supabase)
 - [x] `profiles`, `series`, `episodes`, `subscriptions`, `watch_progress` + trigger de perfil no cadastro
