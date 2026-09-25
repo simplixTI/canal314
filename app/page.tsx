@@ -69,6 +69,9 @@ export default async function HomePage() {
   }
 
   const hero = series.find((s) => s.display_order === 1) ?? series[0];
+  // Tendo teaser, o botão do hero leva a ele: é o material de estreia, grátis
+  // e sem login. Sem teaser, cai no episódio 1 como antes.
+  const heroTeaser = getTeaser(hero.slug);
   const novidades = [...series]
     .sort((a, b) => {
       const aConteudo = a.episode_count > 0 || getTeaser(a.slug) ? 1 : 0;
@@ -121,7 +124,11 @@ export default async function HomePage() {
             </p>
             <div className="mt-7 flex items-center gap-4">
               <Link
-                href={`/assistir/${hero.slug}/1`}
+                href={
+                  heroTeaser
+                    ? `/assistir/${hero.slug}/teaser`
+                    : `/assistir/${hero.slug}/1`
+                }
                 className="flex items-center gap-2.5 whitespace-nowrap rounded-full bg-accent px-8 py-4 text-sm font-bold uppercase tracking-[0.14em] text-white transition hover:bg-accent-hover"
               >
                 <PlayIcon className="h-4 w-4" />

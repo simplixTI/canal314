@@ -5,6 +5,10 @@
  * e registre aqui.
  */
 export const TEASERS: Record<string, { url: string; duration: string }> = {
+  "pastor-everaldo-dias": {
+    url: "/teasers/pastor-everaldo-dias.mp4",
+    duration: "0:30",
+  },
   "augusto-cury": { url: "/teasers/augusto-cury.mp4", duration: "1:17" },
   "juscelino-kubitschek": {
     url: "/teasers/juscelino-kubitschek.mp4",
