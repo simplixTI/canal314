@@ -198,3 +198,24 @@ export function TikTokIcon(props: IconProps) {
     </svg>
   );
 }
+
+/* ---------- Som do player ---------- */
+
+export function SoundOnIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M4 9.5v5h3l4.5 4v-13L7 9.5H4Z" />
+      <path d="M15.5 9.2a4 4 0 0 1 0 5.6" />
+      <path d="M18.2 6.5a7.6 7.6 0 0 1 0 11" />
+    </svg>
+  );
+}
+
+export function SoundOffIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M4 9.5v5h3l4.5 4v-13L7 9.5H4Z" />
+      <path d="m15.5 9.5 5 5M20.5 9.5l-5 5" />
+    </svg>
+  );
+}
