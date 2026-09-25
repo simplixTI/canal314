@@ -14,6 +14,7 @@
 | Supabase | projeto `Canal 314` — https://taawisexhlnvuqzybvxq.supabase.co (região West US) |
 | Deploy | automático: `git push` na branch `main` → build e publica |
 | Env vars | `NEXT_PUBLIC_SUPABASE_URL` + `NEXT_PUBLIC_SUPABASE_ANON_KEY` (Vercel: production+preview; local: `.env.local`) |
+| E-mail | Resend, remetente `noreply@canal314.com.br` — `RESEND_API_KEY` (chave **restrita a envio**, só servidor) + `EMAIL_FROM`; helper em `lib/email.ts`, teste com `node scripts/email-test.mjs voce@exemplo.com` |
 
 ## Modelo de negócio (decidido em 2026-09-21)
 
@@ -45,6 +46,7 @@
 - [x] 314Coins: saldo no header, página `/coins` com 3 pacotes (mock), ledger em `coin_transactions`
 - [x] 314 Pass: página `/assinar` rebrandeada, assinatura mock (ativa 30 dias) — pronta para webhook de gateway
 - [x] Conta: saldo coins, status do passe, Minha Lista, continuar assistindo, logout
+- [x] E-mail de cadastro pela Resend (`POST /api/email/cadastro`, disparado pelo LoginForm logo após o signUp; destinatário vem da sessão, só nos 10 primeiros minutos da conta). Modelo em `lib/email-templates.ts`, envio em `lib/email.ts`
 - [x] Nav: Início · Categorias (âncora) · PodCast · Zap da Fé (externo, nova aba → zapdafe.com.br/mensagem)
 - [x] **Header mobile padrão ReelShort (2026-09)**: hambúrguer + logo centrada + busca/avatar, abas com underline laranja na ativa; drawer lateral real (seções, 314Coins, 314 Pass, legais, Sair); busca real por título (ilike Supabase, debounce, overlay full-screen). Desktop ≥ lg inalterado
 - [x] PodCast: página com episódio do YouTube incorporado (ID XrhcJl8tf5w)
@@ -68,11 +70,12 @@
 ## Pendências ⏳
 
 ### Bloqueadas (precisam de você)
+- [ ] **Supabase Auth (painel)**: Authentication → Providers → Email → **Confirm email: OFF** (o e-mail de cadastro sai pela Resend, não pelo Supabase); Authentication → URL Configuration → **Site URL** = `https://canal314.vercel.app` e Redirect URLs `https://canal314.vercel.app/**` — hoje está em localhost e todo link de auth (reset de senha, Google) cai lá
+- [ ] **Resend**: confirmar que `canal314.com.br` está verificado (DKIM/SPF) — a chave é restrita a envio e não deixa consultar; `node scripts/email-test.mjs voce@exemplo.com` responde na hora
 - [ ] **Dados públicos em `lib/site.ts` são PALPITE** — e-mail `contato@canal314.com.br` (domínio ainda não existe) e os @ de YouTube/Instagram/TikTok. O rodapé e `/contato` apontam para lá; corrigir o arquivo conserta o site inteiro
 - [ ] **Termos e Privacidade precisam de revisão de advogado** antes de valer como contrato (o texto descreve o produto real, mas foi escrito por IA)
 - [ ] **IDs reais do YouTube** dos episódios (hoje todos usam placeholder `dQw4w9WgXcQ`) — passar série + nº do ep + ID; atualizar via SQL Editor (snippet no README)
 - [ ] **Vídeo do PodCast está PRIVADO** — mudar para "Não listado" no YouTube Studio, senão ninguém assiste
-- [ ] Confirmação de e-mail do Supabase está LIGADA — avaliar desligar em Authentication → Providers → Email (facilita cadastro)
 - [ ] Sobraram em `public/` duas artes sem uso — `logo_.png` (marca preta antiga) e `logo_2.png` (badge quadrado do logo anterior): confirmar se podem ser apagadas
 
 ### Produto / técnica

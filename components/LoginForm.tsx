@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
-import Logo from "@/components/Logo";
 
 type Mode = "signin" | "signup";
 
@@ -44,7 +43,12 @@ export default function LoginForm() {
         });
         if (error) throw error;
         if (data.session) {
-          // Confirmação de e-mail desativada: entra direto
+          // Confirmação de e-mail desativada: entra direto. O e-mail de
+          // boas-vindas sai pela Resend, no servidor, sem segurar a navegação
+          // (keepalive: o pedido sobrevive à troca de página).
+          void fetch("/api/email/cadastro", { method: "POST", keepalive: true }).catch(
+            () => {}
+          );
           router.push(next);
           router.refresh();
         } else {
@@ -82,13 +86,11 @@ export default function LoginForm() {
     "w-full border-b border-white/25 bg-transparent px-0 py-3 text-[15px] text-white placeholder:text-white/30 outline-none transition focus:border-white";
 
   return (
-    <div className="flex min-h-dvh items-center justify-center px-6 py-16">
+    // Sem logo próprio: a marca já está no header fixo, e no celular as duas
+    // batiam uma na outra. pt-32 mantém o título abaixo do header.
+    <div className="flex min-h-dvh items-center justify-center px-6 pb-16 pt-32">
       <div className="w-full max-w-xs">
-        <div className="flex justify-center">
-          <Logo size="lg" />
-        </div>
-
-        <h1 className="mt-10 text-center font-[family-name:var(--font-display)] text-4xl font-semibold uppercase leading-[0.95] tracking-[-0.02em]">
+        <h1 className="text-center font-[family-name:var(--font-display)] text-4xl font-semibold uppercase leading-[0.95] tracking-[-0.02em]">
           {mode === "signin" ? "Entrar" : "Criar conta"}
         </h1>
         <p className="mt-3 text-center text-sm text-white/55">
